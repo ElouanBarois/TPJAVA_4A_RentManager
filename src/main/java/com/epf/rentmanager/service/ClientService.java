@@ -54,4 +54,11 @@ public class ClientService {
 			throw new ServiceException("Erreur lors de la récupération de tous les clients.");
 		}
 	}
+	public void delete(Client client) throws ServiceException {
+		try {
+			clientDao.delete(client);
+		} catch (DaoException e) {
+			throw new ServiceException("Error while deleting client with ID ");
+		}
+	}
 }

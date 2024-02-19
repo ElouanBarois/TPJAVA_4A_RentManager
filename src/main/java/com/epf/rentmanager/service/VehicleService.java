@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.epf.rentmanager.dao.DaoException;
 import com.epf.rentmanager.dao.VehicleDao;
+import com.epf.rentmanager.model.Client;
 import com.epf.rentmanager.model.Vehicle;
 
 public class VehicleService {
@@ -51,4 +52,12 @@ public class VehicleService {
 			throw new ServiceException("Erreur lors de la récupération de tous les véhicules.");
 		}
 	}
+	public void delete(Vehicle vehicle) throws ServiceException {
+		try {
+			vehicleDao.delete(vehicle);
+		} catch (DaoException e) {
+			throw new ServiceException("Error while deleting client with ID ");
+		}
+	}
+
 }

@@ -36,8 +36,8 @@ public class ReservationDao {
 
 	public long create(Reservation reservation) throws DaoException {
 		try (Connection connection = ConnectionManager.getConnection(); PreparedStatement statement = connection.prepareStatement(CREATE_RESERVATION_QUERY, PreparedStatement.RETURN_GENERATED_KEYS)) {
-			statement.setLong(1, reservation.getClientid());
-			statement.setLong(2, reservation.getVehicleid());
+			statement.setLong(1, reservation.getClientId());
+			statement.setLong(2, reservation.getVehicleId());
 			// Convert LocalDate to java.sql.Date
 			Date debutDate = Date.valueOf(reservation.getDebut());
 			statement.setDate(3, debutDate);

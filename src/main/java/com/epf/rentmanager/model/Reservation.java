@@ -1,16 +1,18 @@
 package com.epf.rentmanager.model;
+
 import java.time.LocalDate;
+
 public class Reservation {
     private long id;
-    private long clientid;
-    private long vehicleid;
-    private java.time.LocalDate debut;
-    private java.time.LocalDate fin;
+    private long clientId;
+    private long vehicleId;
+    private LocalDate debut;
+    private LocalDate fin;
 
-    public Reservation(long id, long clientid, long vehicleid, LocalDate debut, LocalDate fin) {
+    public Reservation(long id, long clientId, long vehicleId, LocalDate debut, LocalDate fin) {
         this.id = id;
-        this.clientid = clientid;
-        this.vehicleid = vehicleid;
+        this.clientId = clientId;
+        this.vehicleId = vehicleId;
         this.debut = debut;
         this.fin = fin;
     }
@@ -19,24 +21,24 @@ public class Reservation {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 
-    public long getClientid() {
-        return clientid;
+    public long getClientId() {
+        return clientId;
     }
 
-    public void setClientid(int clientid) {
-        this.clientid = clientid;
+    public void setClientId(long clientId) {
+        this.clientId = clientId;
     }
 
-    public long getVehicleid() {
-        return vehicleid;
+    public long getVehicleId() {
+        return vehicleId;
     }
 
-    public void setVehicleid(int vehicleid) {
-        this.vehicleid = vehicleid;
+    public void setVehicleId(long vehicleId) {
+        this.vehicleId = vehicleId;
     }
 
     public LocalDate getDebut() {
@@ -59,8 +61,8 @@ public class Reservation {
     public String toString() {
         return "Reservation{" +
                 "id=" + id +
-                ", clientid=" + clientid +
-                ", vehicleid=" + vehicleid +
+                ", clientId=" + clientId +
+                ", vehicleId=" + vehicleId +
                 ", debut=" + debut +
                 ", fin=" + fin +
                 '}';
