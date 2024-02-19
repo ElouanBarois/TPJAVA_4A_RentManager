@@ -40,8 +40,7 @@ public class ClientDao {
 			Date naissanceDate = Date.valueOf(client.getNaissance());
 			statement.setDate(4, naissanceDate);
 			int affectedRows = statement.executeUpdate();
-			statement.close();
-			connection.close();
+
 
 			if (affectedRows == 0) {
 				throw new DaoException("Creating client failed, no rows affected.");
@@ -77,17 +76,19 @@ public class ClientDao {
 		try (Connection connection = ConnectionManager.getConnection();PreparedStatement statement = connection.prepareStatement(FIND_CLIENT_QUERY)) {
 			statement.setLong(1, id);
 			ResultSet resultSet = statement.executeQuery();
-			statement.close();
-			connection.close();
+
 			if (resultSet.next()) {
 				String nom = resultSet.getString("nom");
 				String prenom = resultSet.getString("prenom");
 				String email = resultSet.getString("email");
 				LocalDate naissance = resultSet.getDate("naissance").toLocalDate();
 				return new Client(id, nom, prenom, email, naissance);
+
 			} else {
 				throw new DaoException("Client with id " + id + " not found.");
+
 			}
+
 
 		} catch (SQLException ex) {
 			throw new DaoException("Error finding client by id: " + ex.getMessage());
@@ -98,8 +99,7 @@ public class ClientDao {
 		List<Client> clients = new ArrayList<>();
 		try (Connection connection = ConnectionManager.getConnection();PreparedStatement statement = connection.prepareStatement(FIND_CLIENTS_QUERY)) {
 			ResultSet resultSet = statement.executeQuery();
-			statement.close();
-			connection.close();
+
 			while (resultSet.next()) {
 				long id = resultSet.getLong("id");
 				String nom = resultSet.getString("nom");
@@ -108,6 +108,8 @@ public class ClientDao {
 				LocalDate naissance = resultSet.getDate("naissance").toLocalDate();
 				clients.add(new Client(id, nom, prenom, email, naissance));
 			}
+			statement.close();
+			connection.close();
 		} catch (SQLException ex) {
 			throw new DaoException("Error finding all clients: " + ex.getMessage());
 		}
