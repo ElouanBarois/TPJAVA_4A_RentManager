@@ -15,7 +15,7 @@ public class ClientCLI {
         this.clientService = clientService;
     }
     public ClientCLI() {
-        this.clientService = new ClientService(); // Assuming you have a ClientService class
+        this.clientService = new ClientService();
     }
 
     public void createClient() {
