@@ -1,6 +1,7 @@
 package com.epf.rentmanager.ui.cli;
 
 import com.epf.rentmanager.model.Vehicle;
+import com.epf.rentmanager.service.ClientService;
 import com.epf.rentmanager.service.ServiceException;
 import com.epf.rentmanager.service.VehicleService;
 
@@ -12,6 +13,9 @@ public class VehicleCLI {
 
     public VehicleCLI(VehicleService vehicleService) {
         this.vehicleService = vehicleService;
+    }
+    public VehicleCLI() {
+        this.vehicleService = new VehicleService();
     }
 
     public void createVehicle() {

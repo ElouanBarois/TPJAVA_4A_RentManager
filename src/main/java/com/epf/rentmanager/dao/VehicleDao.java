@@ -22,10 +22,10 @@ public class VehicleDao {
 		return instance;
 	}
 	
-	private static final String CREATE_VEHICLE_QUERY = "INSERT INTO Vehicle(constructeur, nb_places) VALUES(?, ?);";
+	private static final String CREATE_VEHICLE_QUERY = "INSERT INTO Vehicle( constructeur,modele, nb_places) VALUES(?, ?, ?);";
 	private static final String DELETE_VEHICLE_QUERY = "DELETE FROM Vehicle WHERE id=?;";
-	private static final String FIND_VEHICLE_QUERY = "SELECT id, constructeur, nb_places FROM Vehicle WHERE id=?;";
-	private static final String FIND_VEHICLES_QUERY = "SELECT id, constructeur, nb_places FROM Vehicle;";
+	private static final String FIND_VEHICLE_QUERY = "SELECT id, constructeur,modele, nb_places FROM Vehicle WHERE id=?;";
+	private static final String FIND_VEHICLES_QUERY = "SELECT id, constructeur,modele, nb_places FROM Vehicle;";
 	
 	public long create(Vehicle vehicle) throws DaoException {
 		try (Connection connection = ConnectionManager.getConnection(); PreparedStatement statement = connection.prepareStatement(CREATE_VEHICLE_QUERY, PreparedStatement.RETURN_GENERATED_KEYS)) {
@@ -75,7 +75,7 @@ public class VehicleDao {
 			if (resultSet.next()) {
 				String constructeur = resultSet.getString("constructeur");
 				String modele = resultSet.getString("modele");
-				int nbplaces = resultSet.getInt("nbplaces");
+				int nbplaces = resultSet.getInt("nb_places");
 				return new Vehicle(id, constructeur, modele, nbplaces);
 			} else {
 				throw new DaoException("Vehicle with id " + id + " not found.");
@@ -90,13 +90,12 @@ public class VehicleDao {
 		List<Vehicle> vehicles = new ArrayList<>();
 		try (Connection connection = ConnectionManager.getConnection();PreparedStatement statement = connection.prepareStatement(FIND_VEHICLES_QUERY)) {
 			ResultSet resultSet = statement.executeQuery();
-			statement.close();
-			connection.close();
+
 			while (resultSet.next()) {
 				long id = resultSet.getLong("id");
 				String constructeur = resultSet.getString("constructeur");
 				String modele = resultSet.getString("modele");
-				int nbplaces = resultSet.getInt("nbplaces");
+				int nbplaces = resultSet.getInt("nb_places");
 				vehicles.add(new Vehicle(id, constructeur, modele, nbplaces));
 			}
 		} catch (SQLException ex) {

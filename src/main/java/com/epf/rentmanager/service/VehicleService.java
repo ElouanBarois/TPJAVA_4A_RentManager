@@ -12,7 +12,7 @@ public class VehicleService {
 	private VehicleDao vehicleDao;
 	public static VehicleService instance;
 
-	private VehicleService() {
+	public VehicleService() {
 		this.vehicleDao = VehicleDao.getInstance();
 	}
 
@@ -33,7 +33,7 @@ public class VehicleService {
 		try {
 			return vehicleDao.create(vehicle);
 		} catch (DaoException ex) {
-			throw new ServiceException("Erreur lors de la création du véhicule.");
+			throw new ServiceException("Erreur lors de la création du véhicule."+ ex.getMessage());
 		}
 	}
 
@@ -41,7 +41,7 @@ public class VehicleService {
 		try {
 			return vehicleDao.findById(id);
 		} catch (DaoException ex) {
-			throw new ServiceException("Erreur lors de la récupération du véhicule par son ID.");
+			throw new ServiceException("Erreur lors de la récupération du véhicule par son ID." + ex.getMessage());
 		}
 	}
 
@@ -49,14 +49,14 @@ public class VehicleService {
 		try {
 			return vehicleDao.findAll();
 		} catch (DaoException ex) {
-			throw new ServiceException("Erreur lors de la récupération de tous les véhicules.");
+			throw new ServiceException("Erreur lors de la récupération de tous les véhicules."+ex.getMessage());
 		}
 	}
 	public void delete(Vehicle vehicle) throws ServiceException {
 		try {
 			vehicleDao.delete(vehicle);
 		} catch (DaoException e) {
-			throw new ServiceException("Error while deleting client with ID ");
+			throw new ServiceException("Error while deleting client with ID "+e.getMessage());
 		}
 	}
 
