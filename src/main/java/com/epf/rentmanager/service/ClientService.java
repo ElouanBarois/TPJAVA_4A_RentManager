@@ -11,7 +11,7 @@ public class ClientService {
 	private ClientDao clientDao;
 	public static ClientService instance;
 
-	private ClientService() {
+	public ClientService() {
 		this.clientDao = ClientDao.getInstance();
 	}
 
@@ -35,7 +35,7 @@ public class ClientService {
 		try {
 			return clientDao.create(client);
 		} catch (DaoException ex) {
-			throw new ServiceException("Erreur lors de la création du client.");
+			throw new ServiceException("Erreur lors de la création du client."+ ex.getMessage());
 		}
 	}
 
@@ -43,7 +43,7 @@ public class ClientService {
 		try {
 			return clientDao.findById(id);
 		} catch (DaoException ex) {
-			throw new ServiceException("Erreur lors de la récupération du client par son ID.");
+			throw new ServiceException("Erreur lors de la récupération du client par son ID."+ ex.getMessage());
 		}
 	}
 
@@ -51,14 +51,14 @@ public class ClientService {
 		try {
 			return clientDao.findAll();
 		} catch (DaoException ex) {
-			throw new ServiceException("Erreur lors de la récupération de tous les clients.");
+			throw new ServiceException("Erreur lors de la récupération de tous les clients."+ ex.getMessage());
 		}
 	}
 	public void delete(Client client) throws ServiceException {
 		try {
 			clientDao.delete(client);
 		} catch (DaoException e) {
-			throw new ServiceException("Error while deleting client with ID ");
+			throw new ServiceException("Error while deleting client with ID "+ e.getMessage());
 		}
 	}
 }

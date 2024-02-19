@@ -14,6 +14,9 @@ public class ClientCLI {
     public ClientCLI(ClientService clientService) {
         this.clientService = clientService;
     }
+    public ClientCLI() {
+        this.clientService = new ClientService(); // Assuming you have a ClientService class
+    }
 
     public void createClient() {
         Scanner scanner = new Scanner(System.in);
@@ -29,6 +32,11 @@ public class ClientCLI {
         System.out.print("Date de naissance (AAAA-MM-JJ) : ");
         String naissanceStr = scanner.nextLine();
         LocalDate naissance = LocalDate.parse(naissanceStr);
+
+        if (nom.isEmpty() || prenom.isEmpty() || email.isEmpty() || naissanceStr.isEmpty()) {
+            System.out.println("Erreur : Veuillez saisir tous les champs.");
+            return; // Exit the method early
+        }
 
         try {
             Client client = new Client(id, nom, prenom, email, naissance);
