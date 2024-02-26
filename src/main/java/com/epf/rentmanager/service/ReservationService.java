@@ -2,14 +2,23 @@ package com.epf.rentmanager.service;
 
 import com.epf.rentmanager.dao.DaoException;
 import com.epf.rentmanager.dao.ReservationDao;
+import com.epf.rentmanager.model.Client;
 import com.epf.rentmanager.model.Reservation;
 import java.util.List;
 
 public class ReservationService {
     private final ReservationDao reservationDao;
+    public static ReservationService instance;
 
     public ReservationService() {
         this.reservationDao = ReservationDao.getInstance();
+    }
+
+    public static ReservationService getInstance(){
+        if(instance==null){
+            instance=new ReservationService();
+        }
+        return instance;
     }
 
     public long createReservation(Reservation reservation) throws ServiceException {
@@ -20,13 +29,14 @@ public class ReservationService {
         }
     }
 
-    public void deleteReservation(Reservation reservation) throws ServiceException {
+    public long deleteReservation(long id) throws ServiceException {
         try {
-            reservationDao.delete(reservation);
+            return reservationDao.delete(id);
         } catch (DaoException ex) {
             throw new ServiceException("Error deleting reservation: " + ex.getMessage());
         }
     }
+
 
     public List<Reservation> findReservationsByClientId(long clientId) throws ServiceException {
         try {
@@ -51,4 +61,5 @@ public class ReservationService {
             throw new ServiceException("Error finding all reservations: " + ex.getMessage());
         }
     }
+
 }

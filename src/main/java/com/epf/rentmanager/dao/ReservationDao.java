@@ -63,17 +63,21 @@ public class ReservationDao {
 	}
 
 	public long delete(Reservation reservation) throws DaoException {
-		try (Connection connection = ConnectionManager.getConnection(); PreparedStatement statement = connection.prepareStatement(DELETE_RESERVATION_QUERY)) {
-			statement.setLong(1, reservation.getId());
-			int affectedRows = statement.executeUpdate();
-			statement.close();
-			connection.close();
-			if (affectedRows == 0) {
-				throw new DaoException("Deleting reservation failed, no rows affected.");
-			}
-			return affectedRows;
-		} catch (SQLException ex) {
-			throw new DaoException("Error deleting reservation: " + ex.getMessage());
+		try (Connection connection = ConnectionManager.getConnection();
+			 PreparedStatement preparedStatement = connection.prepareStatement(DELETE_RESERVATION_QUERY)) {
+			preparedStatement.setLong(1, reservation.getId());
+			return preparedStatement.executeUpdate();
+		} catch (SQLException e) {
+			throw new DaoException("Erreur lors de la suppression d'une reservation."+e);
+		}
+	}
+	public long delete(long id) throws DaoException {
+		try (Connection connection = ConnectionManager.getConnection();
+			 PreparedStatement preparedStatement = connection.prepareStatement(DELETE_RESERVATION_QUERY)) {
+			preparedStatement.setLong(1, id);
+			return preparedStatement.executeUpdate();
+		} catch (SQLException e) {
+			throw new DaoException("Erreur lors de la suppression d'une reservation."+ e);
 		}
 	}
 
@@ -139,4 +143,6 @@ public class ReservationDao {
 		}
 		return reservations;
 	}
+
+
 }
