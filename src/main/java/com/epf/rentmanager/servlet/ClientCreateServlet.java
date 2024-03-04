@@ -1,9 +1,13 @@
 package com.epf.rentmanager.servlet;
+
 import javax.servlet.ServletException;
-import com.epf.rentmanager.service.ServiceException;
+
 import com.epf.rentmanager.model.Vehicle;
+import com.epf.rentmanager.service.ServiceException;
+import com.epf.rentmanager.model.Client;
+import com.epf.rentmanager.service.ClientService;
 import com.epf.rentmanager.service.VehicleService;
-import com.epf.rentmanager.servlet.VehicleListServlet;
+import com.epf.rentmanager.servlet.ClientListServlet;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.context.support.SpringBeanAutowiringSupport;
 
@@ -12,12 +16,13 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
-
-@WebServlet("/cars/create")
-public class VehicleCreateServlet extends HttpServlet {
+@WebServlet("/users/create")
+public class ClientCreateServlet extends HttpServlet{
     @Autowired
-    VehicleService vehicleService;
+    ClientService clientService;
     @Override
     public void init() throws ServletException {
         super.init();
@@ -25,22 +30,24 @@ public class VehicleCreateServlet extends HttpServlet {
 
     }
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        this.getServletContext().getRequestDispatcher("/WEB-INF/views/vehicles/create.jsp").forward(request, response);
+        this.getServletContext().getRequestDispatcher("/WEB-INF/views/users/create.jsp").forward(request, response);
     }
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String manufacturer = request.getParameter("manufacturer");
-        String modele = request.getParameter("modele");
-        int seats = Integer.parseInt(request.getParameter("seats"));
+        String Nom = request.getParameter("last_name");
+        String Prenom = request.getParameter("first_name");
+        String email = request.getParameter("email");
+        String Stringnaissance = request.getParameter("Naissance");
 
-        // Création d'une instance de Vehicle avec les données soumises par l'utilisateur
-        Vehicle vehicle = new Vehicle(0,manufacturer, modele, seats);
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
-        // Appel du service pour insérer le véhicule dans la base de données
+        LocalDate naissance = LocalDate.parse(Stringnaissance, formatter);
+
+
+        Client client = new Client(0,Nom, Prenom, email,naissance);
 
         try {
-            vehicleService.create(vehicle);
-            response.sendRedirect(request.getContextPath() + "/cars");
-
+            clientService.create(client);
+            response.sendRedirect(request.getContextPath() + "/users");
 
         } catch (ServiceException e) {
             e.printStackTrace();

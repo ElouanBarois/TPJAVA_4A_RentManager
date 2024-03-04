@@ -7,7 +7,8 @@ import java.util.regex.Pattern;
 import java.time.LocalDate;
 import java.util.Scanner;
 
-public class ClientCLI {
+public class ClientCLI {}
+    /*
     private ClientService clientService;
 
     public ClientCLI(ClientService clientService) {
@@ -94,3 +95,4 @@ public class ClientCLI {
     }
 }
 
+*/

@@ -10,7 +10,8 @@ import com.epf.rentmanager.service.ReservationService;
 import com.epf.rentmanager.service.ServiceException;
 import com.epf.rentmanager.utils.IOUtils;
 
-public class ReservationCLI {
+public class ReservationCLI {}
+    /*
 
     private final ReservationService reservationService;
 
@@ -116,3 +117,4 @@ public class ReservationCLI {
         System.out.println("Un vehicule a ete suprimer : " + mes);
     }
 }
+*/

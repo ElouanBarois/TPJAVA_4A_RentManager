@@ -7,7 +7,8 @@ import com.epf.rentmanager.service.VehicleService;
 
 import java.util.Scanner;
 
-public class VehicleCLI {
+public class VehicleCLI {}
+/*
 
     private VehicleService vehicleService;
 
@@ -64,3 +65,4 @@ public class VehicleCLI {
 
 
 }
+*/
