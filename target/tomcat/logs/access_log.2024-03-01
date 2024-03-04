@@ -1,0 +1,16 @@
+0:0:0:0:0:0:0:1 - - [01/Mar/2024:09:15:43 +0100] "GET /rentmanager HTTP/1.1" 302 - http-bio-8080-exec-1 0
+0:0:0:0:0:0:0:1 - - [01/Mar/2024:09:15:43 +0100] "GET /rentmanager/ HTTP/1.1" 302 - http-bio-8080-exec-2 23
+0:0:0:0:0:0:0:1 - - [01/Mar/2024:09:15:43 +0100] "GET /rentmanager/home HTTP/1.1" 200 6192 http-bio-8080-exec-3 50
+0:0:0:0:0:0:0:1 - - [01/Mar/2024:09:15:43 +0100] "GET /rentmanager/resources/bower_components/Ionicons/css/ionicons.min.css HTTP/1.1" 404 1087 http-bio-8080-exec-4 2
+0:0:0:0:0:0:0:1 - - [01/Mar/2024:09:15:43 +0100] "GET /rentmanager/resources/bower_components/fastclick/lib/fastclick.js HTTP/1.1" 404 1081 http-bio-8080-exec-5 1
+0:0:0:0:0:0:0:1 - - [01/Mar/2024:09:15:43 +0100] "GET /rentmanager/resources/js/demo.js HTTP/1.1" 404 1015 http-bio-8080-exec-6 1
+0:0:0:0:0:0:0:1 - - [01/Mar/2024:09:15:43 +0100] "GET /favicon.ico HTTP/1.1" 404 - http-bio-8080-exec-9 0
+0:0:0:0:0:0:0:1 - - [01/Mar/2024:09:15:44 +0100] "GET /rentmanager/cars HTTP/1.1" 200 9744 http-bio-8080-exec-10 240
+0:0:0:0:0:0:0:1 - - [01/Mar/2024:09:15:44 +0100] "GET /rentmanager/resources/bower_components/Ionicons/css/ionicons.min.css HTTP/1.1" 404 1087 http-bio-8080-exec-10 1
+0:0:0:0:0:0:0:1 - - [01/Mar/2024:09:15:44 +0100] "GET /rentmanager/resources/bower_components/fastclick/lib/fastclick.js HTTP/1.1" 404 1081 http-bio-8080-exec-8 1
+0:0:0:0:0:0:0:1 - - [01/Mar/2024:09:15:44 +0100] "GET /rentmanager/resources/js/demo.js HTTP/1.1" 404 1015 http-bio-8080-exec-7 1
+0:0:0:0:0:0:0:1 - - [01/Mar/2024:09:15:45 +0100] "GET /rentmanager/cars/create HTTP/1.1" 200 8054 http-bio-8080-exec-7 490
+0:0:0:0:0:0:0:1 - - [01/Mar/2024:09:15:45 +0100] "GET /rentmanager/resources/bower_components/Ionicons/css/ionicons.min.css HTTP/1.1" 404 1087 http-bio-8080-exec-7 1
+0:0:0:0:0:0:0:1 - - [01/Mar/2024:09:15:45 +0100] "GET /rentmanager/resources/js/demo.js HTTP/1.1" 404 1015 http-bio-8080-exec-10 1
+0:0:0:0:0:0:0:1 - - [01/Mar/2024:09:15:45 +0100] "GET /rentmanager/resources/bower_components/fastclick/lib/fastclick.js HTTP/1.1" 404 1081 http-bio-8080-exec-8 1
+0:0:0:0:0:0:0:1 - - [01/Mar/2024:09:16:32 +0100] "POST /rentmanager/cars/create HTTP/1.1" 500 1079 http-bio-8080-exec-9 38

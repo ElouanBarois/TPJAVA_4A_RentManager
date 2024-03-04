@@ -26,6 +26,7 @@ public class VehicleDao {
 	private static final String DELETE_VEHICLE_QUERY = "DELETE FROM Vehicle WHERE id=?;";
 	private static final String FIND_VEHICLE_QUERY = "SELECT id, constructeur,modele, nb_places FROM Vehicle WHERE id=?;";
 	private static final String FIND_VEHICLES_QUERY = "SELECT id, constructeur,modele, nb_places FROM Vehicle;";
+	private static final String COUNT_VEHICLE_QUERY = "SELECT COUNT(*) AS total FROM Vehicle;";
 	
 	public long create(Vehicle vehicle) throws DaoException {
 		try (Connection connection = ConnectionManager.getConnection(); PreparedStatement statement = connection.prepareStatement(CREATE_VEHICLE_QUERY, PreparedStatement.RETURN_GENERATED_KEYS)) {
@@ -33,8 +34,7 @@ public class VehicleDao {
 			statement.setString(2, vehicle.getModele());
 			statement.setInt(3, vehicle.getNbPlaces());
 			int affectedRows = statement.executeUpdate();
-			statement.close();
-			connection.close();
+
 
 			if (affectedRows == 0) {
 				throw new DaoException("Creating vehicle failed, no rows affected.");
@@ -55,8 +55,6 @@ public class VehicleDao {
 		try (Connection connection = ConnectionManager.getConnection();PreparedStatement statement = connection.prepareStatement(DELETE_VEHICLE_QUERY)) {
 			statement.setLong(1, vehicle.getId());
 			int affectedRows = statement.executeUpdate();
-			statement.close();
-			connection.close();
 			if (affectedRows == 0) {
 				throw new DaoException("Deleting vehicle failed, no rows affected.");
 			}
@@ -70,8 +68,6 @@ public class VehicleDao {
 		try (Connection connection = ConnectionManager.getConnection();PreparedStatement statement = connection.prepareStatement(FIND_VEHICLE_QUERY)) {
 			statement.setLong(1, id);
 			ResultSet resultSet = statement.executeQuery();
-			statement.close();
-			connection.close();
 			if (resultSet.next()) {
 				String constructeur = resultSet.getString("constructeur");
 				String modele = resultSet.getString("modele");
@@ -102,6 +98,23 @@ public class VehicleDao {
 			throw new DaoException("Error finding all vehicles: " + ex.getMessage());
 		}
 		return vehicles;
+	}
+	public int count() throws DaoException {
+
+		try (Connection connection = ConnectionManager.getConnection();
+			 PreparedStatement statement = connection.prepareStatement(COUNT_VEHICLE_QUERY);
+			 ) {
+			ResultSet resultSet = statement.executeQuery();
+
+			if (resultSet.next()) {
+				return resultSet.getInt("total");
+			} else {
+				throw new DaoException("No vehicles found in the database.");
+			}
+
+		} catch (SQLException e) {
+			throw new DaoException("Error counting vehicles"+ e);
+		}
 	}
 		
 }

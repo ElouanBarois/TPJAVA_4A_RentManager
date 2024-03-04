@@ -44,6 +44,13 @@ public class VehicleService {
 			throw new ServiceException("Erreur lors de la récupération du véhicule par son ID." + ex.getMessage());
 		}
 	}
+	public int count() throws ServiceException {
+		try{
+			return vehicleDao.count();
+		} catch (DaoException ex) {
+			throw new ServiceException("Erreur lors du calcul du nombre de véhicules." + ex.getMessage());
+		}
+	}
 
 	public List<Vehicle> findAll() throws ServiceException {
 		try {

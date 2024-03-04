@@ -1,3 +1,4 @@
 com\epf\rentmanager\servlet\ServletException.class
 com\epf\rentmanager\ui\cli\ReservationCLI.class
+com\epf\rentmanager\servlet\VehicleCreateServlet.class
 com\epf\rentmanager\servlet\VehicleListServlet.class

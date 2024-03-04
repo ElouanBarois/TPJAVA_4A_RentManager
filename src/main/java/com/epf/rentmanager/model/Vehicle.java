@@ -13,6 +13,11 @@ public class Vehicle {
         this.modele = modele;
         this.nbPlaces = nbPlaces;
     }
+    public Vehicle(String constructeur, String modele, int nbPlaces) {
+        this.constructeur = constructeur;
+        this.modele = modele;
+        this.nbPlaces = nbPlaces;
+    }
 
     // Getters and Setters
     public long getId() {
