@@ -5,13 +5,11 @@ import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import com.epf.rentmanager.model.Reservation;
 
-import com.epf.rentmanager.model.Vehicle;
 import com.epf.rentmanager.persistence.ConnectionManager;
 import org.springframework.stereotype.Repository;
 
@@ -24,6 +22,8 @@ public class ReservationDao {
 	private static final String FIND_RESERVATIONS_BY_CLIENT_QUERY = "SELECT id, vehicle_id, debut, fin FROM Reservation WHERE client_id=?;";
 	private static final String FIND_RESERVATIONS_BY_VEHICLE_QUERY = "SELECT id, client_id, debut, fin FROM Reservation WHERE vehicle_id=?;";
 	private static final String FIND_RESERVATIONS_QUERY = "SELECT id, client_id, vehicle_id, debut, fin FROM Reservation;";
+	private static final String COUNT_RESERVATIONS_QUERY = "SELECT COUNT(*) AS total FROM Reservation;";
+
 
 	public long create(Reservation reservation) throws DaoException {
 		try (Connection connection = ConnectionManager.getConnection(); PreparedStatement statement = connection.prepareStatement(CREATE_RESERVATION_QUERY, PreparedStatement.RETURN_GENERATED_KEYS)) {
@@ -80,9 +80,9 @@ public class ReservationDao {
 			ResultSet resultSet = statement.executeQuery();
 			while (resultSet.next()) {
 				long id = resultSet.getLong("id");
-				long vehicleId = resultSet.getLong("vehicleId");
-				LocalDate debutDate = resultSet.getDate("debutDate").toLocalDate();
-				LocalDate finDate = resultSet.getDate("finDate").toLocalDate();
+				long vehicleId = resultSet.getLong("vehicle_id");
+				LocalDate debutDate = resultSet.getDate("debut").toLocalDate();
+				LocalDate finDate = resultSet.getDate("fin").toLocalDate();
 				reservations.add(new Reservation(id, clientId, vehicleId, debutDate, finDate));
 			}
 			statement.close();
@@ -101,9 +101,9 @@ public class ReservationDao {
 			ResultSet resultSet = statement.executeQuery();
 			while (resultSet.next()) {
 				long id = resultSet.getLong("id");
-				long clientId = resultSet.getLong("clientId");
-				LocalDate debutDate = resultSet.getDate("debutDate").toLocalDate();
-				LocalDate finDate = resultSet.getDate("finDate").toLocalDate();
+				long clientId = resultSet.getLong("client_id");
+				LocalDate debutDate = resultSet.getDate("debut").toLocalDate();
+				LocalDate finDate = resultSet.getDate("fin").toLocalDate();
 				reservations.add(new Reservation(id, clientId, vehicleId, debutDate, finDate));
 			}
 			statement.close();
@@ -119,20 +119,35 @@ public class ReservationDao {
 		List<Reservation> reservations = new ArrayList<>();
 		try (Connection connection = ConnectionManager.getConnection(); PreparedStatement statement = connection.prepareStatement(FIND_RESERVATIONS_QUERY)) {
 			ResultSet resultSet = statement.executeQuery();
-			statement.close();
-			connection.close();
 			while (resultSet.next()) {
 				long id = resultSet.getLong("id");
-				long clientId = resultSet.getLong("clientId");
-				long vehicleId = resultSet.getLong("vehicleId");
-				LocalDate debutDate = resultSet.getDate("debutDate").toLocalDate();
-				LocalDate finDate = resultSet.getDate("finDate").toLocalDate();
+				long clientId = resultSet.getLong("client_id");
+				long vehicleId = resultSet.getLong("vehicle_id");
+				LocalDate debutDate = resultSet.getDate("debut").toLocalDate();
+				LocalDate finDate = resultSet.getDate("fin").toLocalDate();
 				reservations.add(new Reservation(id, clientId, vehicleId, debutDate, finDate));
 			}
 		} catch (SQLException ex) {
 			throw new DaoException("Error finding all reservations: " + ex.getMessage());
 		}
 		return reservations;
+	}
+	public int count() throws DaoException {
+
+		try (Connection connection = ConnectionManager.getConnection();
+			 PreparedStatement statement = connection.prepareStatement(COUNT_RESERVATIONS_QUERY);
+		) {
+			ResultSet resultSet = statement.executeQuery();
+
+			if (resultSet.next()) {
+				return resultSet.getInt("total");
+			} else {
+				throw new DaoException("No reservations found in the database.");
+			}
+
+		} catch (SQLException e) {
+			throw new DaoException("Error counting reservations"+ e);
+		}
 	}
 
 

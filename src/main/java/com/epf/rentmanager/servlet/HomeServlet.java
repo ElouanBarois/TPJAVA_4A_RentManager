@@ -1,5 +1,6 @@
 package com.epf.rentmanager.servlet;
 
+import com.epf.rentmanager.service.ReservationService;
 import com.epf.rentmanager.service.ServiceException;
 import com.epf.rentmanager.service.VehicleService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +18,8 @@ import javax.servlet.http.HttpServletResponse;
 public class HomeServlet extends HttpServlet {
     @Autowired
     VehicleService vehicleService;
+    @Autowired
+    ReservationService reservationService;
     @Override
     public void init() throws ServletException {
         super.init();
@@ -28,8 +31,11 @@ public class HomeServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
         try {
-            int count = vehicleService.count();
-			request.setAttribute("count", count);
+            int countV = vehicleService.count();
+			request.setAttribute("countV", countV);
+            int countR = reservationService.count();
+            request.setAttribute("countR", countR);
+
         } catch (ServiceException e) {
             throw new ServletException(e);
         }
