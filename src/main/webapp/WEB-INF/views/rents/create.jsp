@@ -1,10 +1,9 @@
-<%@ taglib uri = "http://java.sun.com/jsp/jstl/core" prefix = "c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html>
-<%@include file="/WEB-INF/views/common/head.jsp"%>
+<%@include file="/WEB-INF/views/common/head.jsp" %>
 <body class="hold-transition skin-blue sidebar-mini">
 <div class="wrapper">
-
     <%@ include file="/WEB-INF/views/common/header.jsp" %>
     <!-- Left side column. contains the logo and sidebar -->
     <%@ include file="/WEB-INF/views/common/sidebar.jsp" %>
@@ -25,15 +24,16 @@
                     <!-- Horizontal Form -->
                     <div class="box">
                         <!-- form start -->
-                        <form class="form-horizontal" method="post" action="/rents/create">
+                        <form class="form-horizontal" method="post">
                             <div class="box-body">
                                 <div class="form-group">
                                     <label for="car" class="col-sm-2 control-label">Voiture</label>
 
                                     <div class="col-sm-10">
                                         <select class="form-control" id="car" name="car">
-                                            <option value="1">Renault Clio</option>
-                                            <option value="2">Citroen C2</option>
+                                            <c:forEach items="${vehicles}" var="car">
+                                                <option value="${car.id}">${car.constructeur} ${car.modele}</option>
+                                            </c:forEach>
                                         </select>
                                     </div>
                                 </div>
@@ -42,8 +42,9 @@
 
                                     <div class="col-sm-10">
                                         <select class="form-control" id="client" name="client">
-                                            <option value="1">John Doe</option>
-                                            <option value="2">Jane Doe</option>
+                                            <c:forEach items="${clients}" var="client">
+                                                <option value="${client.id}">${client.nom} ${client.prenom}</option>
+                                            </c:forEach>
                                         </select>
                                     </div>
                                 </div>

@@ -35,8 +35,7 @@ public class ReservationDao {
 			Date finDate = Date.valueOf(reservation.getDebut());
 			statement.setDate(4, finDate);
 			int affectedRows = statement.executeUpdate();
-			statement.close();
-			connection.close();
+
 
 			if (affectedRows == 0) {
 				throw new DaoException("Creating reservation failed, no rows affected.");

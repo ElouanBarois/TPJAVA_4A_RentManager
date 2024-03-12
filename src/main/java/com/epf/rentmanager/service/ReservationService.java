@@ -19,7 +19,7 @@ public class ReservationService {
         try {
             return reservationDao.create(reservation);
         } catch (DaoException ex) {
-            throw new ServiceException("Error creating reservation: " + ex.getMessage());
+            throw new ServiceException("Error creating reservation (service): " + ex.getMessage());
         }
     }
 

@@ -8,3 +8,4 @@ com\epf\rentmanager\configuration\AppConfiguration.class
 com\epf\rentmanager\ui\cli\ReservationCLI.class
 com\epf\rentmanager\servlet\ReservationListServlet.class
 com\epf\rentmanager\servlet\VehicleListServlet.class
+com\epf\rentmanager\model\ReservationDTO.class
