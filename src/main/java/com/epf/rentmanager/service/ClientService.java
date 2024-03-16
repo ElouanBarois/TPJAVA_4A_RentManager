@@ -55,4 +55,12 @@ public class ClientService {
 			throw new ServiceException("Error while deleting client with ID "+ e.getMessage());
 		}
 	}
+
+	public void update(Client client) throws ServiceException {
+		try {
+			clientDao.update(client);
+		} catch (DaoException e) {
+			throw new ServiceException("Error while updating client with ID "+ e.getMessage());
+		}
+	}
 }

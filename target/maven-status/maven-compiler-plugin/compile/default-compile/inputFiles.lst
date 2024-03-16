@@ -12,11 +12,13 @@ C:\Users\eloua\OneDrive\Documents\EPF\EPF_4A\JAVA\RentManager\rentmanager\src\ma
 C:\Users\eloua\OneDrive\Documents\EPF\EPF_4A\JAVA\RentManager\rentmanager\src\main\java\com\epf\rentmanager\service\ServiceException.java
 C:\Users\eloua\OneDrive\Documents\EPF\EPF_4A\JAVA\RentManager\rentmanager\src\main\java\com\epf\rentmanager\servlet\ReservationListServlet.java
 C:\Users\eloua\OneDrive\Documents\EPF\EPF_4A\JAVA\RentManager\rentmanager\src\main\java\com\epf\rentmanager\ui\cli\ClientCLI.java
+C:\Users\eloua\OneDrive\Documents\EPF\EPF_4A\JAVA\RentManager\rentmanager\src\main\java\com\epf\rentmanager\servlet\ClientModifyServlet.java
 C:\Users\eloua\OneDrive\Documents\EPF\EPF_4A\JAVA\RentManager\rentmanager\src\main\java\com\epf\rentmanager\servlet\ReservationCreateServlet.java
 C:\Users\eloua\OneDrive\Documents\EPF\EPF_4A\JAVA\RentManager\rentmanager\src\main\java\com\epf\rentmanager\dao\VehicleDao.java
 C:\Users\eloua\OneDrive\Documents\EPF\EPF_4A\JAVA\RentManager\rentmanager\src\main\java\com\epf\rentmanager\ui\cli\ReservationCLI.java
 C:\Users\eloua\OneDrive\Documents\EPF\EPF_4A\JAVA\RentManager\rentmanager\src\main\java\com\epf\rentmanager\service\ReservationService.java
 C:\Users\eloua\OneDrive\Documents\EPF\EPF_4A\JAVA\RentManager\rentmanager\src\main\java\com\epf\rentmanager\servlet\ClientListServlet.java
+C:\Users\eloua\OneDrive\Documents\EPF\EPF_4A\JAVA\RentManager\rentmanager\src\main\java\com\epf\rentmanager\servlet\ClientDetailsServlet.java
 C:\Users\eloua\OneDrive\Documents\EPF\EPF_4A\JAVA\RentManager\rentmanager\src\main\java\com\epf\rentmanager\model\ReservationDTO.java
 C:\Users\eloua\OneDrive\Documents\EPF\EPF_4A\JAVA\RentManager\rentmanager\src\main\java\com\epf\rentmanager\configuration\AppConfiguration.java
 C:\Users\eloua\OneDrive\Documents\EPF\EPF_4A\JAVA\RentManager\rentmanager\src\main\java\com\epf\rentmanager\model\Vehicle.java
