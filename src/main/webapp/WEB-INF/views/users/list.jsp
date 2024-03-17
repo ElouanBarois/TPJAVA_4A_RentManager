@@ -39,17 +39,22 @@
                                     <td>${client.nom}</td>
                                     <td>${client.prenom}</td>
                                     <td>${client.email}</td>
-                                    <td>
-                                        <a class="btn btn-primary" href="${pageContext.request.contextPath}/users/details?id=${client.id}">
-                                        <i class="fa fa-play"></i>
+                                    <td style="display: flex; align-items: center;">
+                                        <a class="btn btn-primary" href="${pageContext.request.contextPath}/users/details?id=${client.id}" style="margin-right: 5px;">
+                                            <i class="fa fa-play"></i>
                                         </a>
-                                        <a class="btn btn-success" href="${pageContext.request.contextPath}/users/modify?id=${client.id}">
+                                        <a class="btn btn-success" href="${pageContext.request.contextPath}/users/modify?id=${client.id}" style="margin-right: 5px;">
                                             <i class="fa fa-edit"></i>
                                         </a>
-                                        <a class="btn btn-danger disabled" href="#">
-                                            <i class="fa fa-trash"></i>
-                                        </a>
+                                        <form method="post" action="${pageContext.request.contextPath}/users">
+                                            <input type="hidden" name="id" value="${client.id}">
+                                            <button type="submit" class="btn btn-danger" style="margin-right: 5px;">
+                                                <i class="fa fa-trash"></i>
+                                            </button>
+                                        </form>
                                     </td>
+
+
                                 </tr>
                                 </c:forEach>
                             </table>

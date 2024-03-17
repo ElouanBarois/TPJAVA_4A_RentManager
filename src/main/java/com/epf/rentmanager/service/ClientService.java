@@ -40,6 +40,13 @@ public class ClientService {
 			throw new ServiceException("Erreur lors de la récupération du client par son ID."+ ex.getMessage());
 		}
 	}
+	public int count() throws ServiceException {
+		try{
+			return clientDao.count();
+		} catch (DaoException ex) {
+			throw new ServiceException("Erreur lors du calcul du nombre de clients (DAO)." + ex.getMessage());
+		}
+	}
 
 	public List<Client> findAll() throws ServiceException {
 		try {

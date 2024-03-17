@@ -58,5 +58,13 @@ public class VehicleService {
 			throw new ServiceException("Error while deleting client with ID "+e.getMessage());
 		}
 	}
+	public void update(Vehicle vehicle) throws ServiceException{
+		try {
+			vehicleDao.update(vehicle);
+		} catch (DaoException e) {
+			throw new ServiceException("Error while updating vehicle with ID "+ e.getMessage());
+		}
+
+	}
 
 }

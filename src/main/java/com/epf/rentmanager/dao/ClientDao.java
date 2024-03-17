@@ -24,6 +24,7 @@ public class ClientDao {
 	private static final String DELETE_CLIENT_QUERY = "DELETE FROM Client WHERE id=?;";
 	private static final String FIND_CLIENT_QUERY = "SELECT nom, prenom, email, naissance FROM Client WHERE id=?;";
 	private static final String UPDATE_CLIENT_QUERY = "UPDATE Client SET nom=?, prenom=?, email=?, naissance=? WHERE id=?;";
+	private static final String COUNT_CLIENT_QUERY = "SELECT COUNT(*) AS total FROM Client;";
 	private static final String FIND_CLIENTS_QUERY = "SELECT id, nom, prenom, email, naissance FROM Client;";
 
 	public long create(Client client) throws DaoException {
@@ -123,7 +124,20 @@ public class ClientDao {
 		} catch (SQLException ex) {
 			throw new DaoException("Error updating client: " + ex.getMessage());
 		}
-
+	}
+	public int count() throws DaoException{
+		try (Connection connection = ConnectionManager.getConnection();
+			 PreparedStatement statement = connection.prepareStatement(COUNT_CLIENT_QUERY);
+		) {
+			ResultSet resultSet = statement.executeQuery();
+			if (resultSet.next()) {
+				return resultSet.getInt("total");
+			} else {
+				throw new DaoException("No clients found in the database.");
+			}
+		} catch (SQLException e) {
+			throw new DaoException("Error counting clients"+ e);
 		}
+	}
 
 }

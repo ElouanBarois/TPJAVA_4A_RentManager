@@ -13,6 +13,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @WebServlet("/users")
@@ -35,4 +37,17 @@ public class ClientListServlet extends HttpServlet {
         request.setAttribute("clients", clientList);
         this.getServletContext().getRequestDispatcher("/WEB-INF/views/users/list.jsp").forward(request, response);
     }
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String clientID = request.getParameter("id");
+        long clientLong = Long.parseLong(clientID);
+        try {
+            Client client = clientService.findById(clientLong);
+            clientService.delete(client);
+            response.sendRedirect(request.getContextPath() + "/users");
+        } catch (ServiceException e) {
+            e.printStackTrace();
+            response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Erreur lors de la suppression du client (Servlet).");
+        }
+    }
+
 }
