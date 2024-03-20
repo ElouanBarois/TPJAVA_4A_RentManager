@@ -29,7 +29,7 @@
                         <!-- est d�crit an l'attribut "method" de la balise forme -->
                         <!-- action indique � quel "cible" sera envoyr la requ�te, ici notre Servlet qui sera bind sur -->
                         <!-- /vehicles/create -->
-                        <form class="form-horizontal" method="post">
+                        <form class="form-horizontal" method="post" onsubmit="return validateForm()">
                             <div class="box-body">
                                 <div class="form-group">
                                     <label for="manufacturer" class="col-sm-2 control-label">Marque</label>
@@ -55,6 +55,8 @@
                                         <input type="text" class="form-control" id="seats" name="seats" placeholder="Nombre de places" required>
                                     </div>
                                 </div>
+                                <div id="seatsErrorMessage" class="col-sm-offset-2 col-sm-10 text-danger" style="display: none;"></div>
+
                                 <!--
                                 <div class="form-group">
                                     <label for="owner" class="col-sm-2 control-label">Propriétaire</label>
@@ -88,5 +90,24 @@
 <!-- ./wrapper -->
 
 <%@ include file="/WEB-INF/views/common/js_imports.jsp" %>
+<script>
+    function validateForm() {
+        var seatsInput = document.getElementById("seats").value;
+        var seats = parseInt(seatsInput);
+
+        if (seats < 2 || seats > 9) {
+            var errorMessage = document.getElementById("seatsErrorMessage");
+            if (errorMessage) {
+                errorMessage.innerHTML = "Le nombre de places doit etre compris entre 2 et 9.";
+                errorMessage.style.display = "block";
+                errorMessage.style.color = "red";
+            } else {
+                console.error("Error: Element with ID 'seatsErrorMessage' not found.");
+            }
+            return false; // Prevent form submission
+        }
+        return true; // Allow form submission
+    }
+</script>
 </body>
 </html>
