@@ -39,16 +39,19 @@
                                     <td>${vehicle.constructeur}</td>
                                     <td>${vehicle.modele}</td>
                                     <td>${vehicle.nbPlaces}</td>
-                                    <td>
-                                        <a class="btn btn-primary " href="${pageContext.request.contextPath}/cars/details?id=${vehicle.id}">
+                                    <td style="display: flex; align-items: center;">
+                                        <a class="btn btn-primary " href="${pageContext.request.contextPath}/cars/details?id=${vehicle.id}" style="margin-right: 5px;">
                                             <i class="fa fa-play"></i>
                                         </a>
-                                        <a class="btn btn-success " href="${pageContext.request.contextPath}/cars/modify?id=${vehicle.id}">
+                                        <a class="btn btn-success " href="${pageContext.request.contextPath}/cars/modify?id=${vehicle.id}" style="margin-right: 5px;">
                                             <i class="fa fa-edit"></i>
                                         </a>
-                                        <a class="btn btn-danger " href="#">
-                                            <i class="fa fa-trash"></i>
-                                        </a>
+                                        <form method="post" action="${pageContext.request.contextPath}/cars">
+                                            <input type="hidden" name="id" value="${vehicle.id}">
+                                            <button type="submit" class="btn btn-danger" style="margin-right: 5px;">
+                                                <i class="fa fa-trash"></i>
+                                            </button>
+                                        </form>
                                     </td>
                                 </tr>
                                 </c:forEach>

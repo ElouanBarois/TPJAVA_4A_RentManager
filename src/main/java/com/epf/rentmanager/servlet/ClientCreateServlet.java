@@ -1,13 +1,9 @@
 package com.epf.rentmanager.servlet;
 
 import javax.servlet.ServletException;
-
-import com.epf.rentmanager.model.Vehicle;
 import com.epf.rentmanager.service.ServiceException;
 import com.epf.rentmanager.model.Client;
 import com.epf.rentmanager.service.ClientService;
-import com.epf.rentmanager.service.VehicleService;
-import com.epf.rentmanager.servlet.ClientListServlet;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.context.support.SpringBeanAutowiringSupport;
 
@@ -18,7 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.List;
+import java.time.temporal.ChronoUnit;
 @WebServlet("/users/create")
 public class ClientCreateServlet extends HttpServlet{
     @Autowired
@@ -39,7 +35,6 @@ public class ClientCreateServlet extends HttpServlet{
         String Stringnaissance = request.getParameter("Naissance");
 
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-
         LocalDate naissance = LocalDate.parse(Stringnaissance, formatter);
 
 

@@ -25,7 +25,7 @@
                     <!-- Horizontal Form -->
                     <div class="box">
                         <!-- form start -->
-                        <form class="form-horizontal" method="post">
+                        <form class="form-horizontal" method="post" onsubmit="return validateForm()">
                             <div class="box-body">
                                 <div class="form-group">
                                     <label for="last_name" class="col-sm-2 control-label">Nom</label>
@@ -56,6 +56,9 @@
                                                data-inputmask="'alias': 'dd/mm/yyyy'" data-mask>
                                     </div>
                                 </div>
+                                <div id="ageErrorMessage" class="col-sm-offset-2 col-sm-10 text-danger" style="display: none;">
+                                    Must be 18 to have an account
+                                </div>
                             </div>
                             <!-- /.box-body -->
                             <div class="box-footer">
@@ -77,5 +80,27 @@
 <!-- ./wrapper -->
 
 <%@ include file="/WEB-INF/views/common/js_imports.jsp" %>
+<script>
+    function validateForm() {
+    var birthdateInput = document.getElementById("Naissance").value;
+    var birthdate = new Date(birthdateInput);
+
+    var today = new Date();
+    var age = today.getFullYear() - birthdate.getFullYear();
+    var monthDiff = today.getMonth() - birthdate.getMonth();
+    if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthdate.getDate())) {
+        age--;
+    }
+
+    if (age < 18) {
+        var errorMessage = document.getElementById("ageErrorMessage");
+        errorMessage.innerHTML = "Vous devez avoir au moins 18 ans pour creer un compte.";
+        errorMessage.style.display = "block";
+        errorMessage.style.color = "red";
+        return false;
+    }
+    return true;
+    }
+</script>
 </body>
 </html>

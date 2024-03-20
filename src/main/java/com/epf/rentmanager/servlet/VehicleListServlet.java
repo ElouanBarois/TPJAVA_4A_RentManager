@@ -1,5 +1,7 @@
 package com.epf.rentmanager.servlet;
 import javax.servlet.ServletException;
+
+import com.epf.rentmanager.model.Client;
 import com.epf.rentmanager.service.ServiceException;
 import com.epf.rentmanager.model.Vehicle;
 import com.epf.rentmanager.service.VehicleService;
@@ -34,5 +36,17 @@ public class VehicleListServlet extends HttpServlet {
         }
         request.setAttribute("vehicles", vehicleList);
         this.getServletContext().getRequestDispatcher("/WEB-INF/views/vehicles/list.jsp").forward(request, response);
+    }
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String vehicleID = request.getParameter("id");
+        long vehicleLong = Long.parseLong(vehicleID);
+        try {
+            Vehicle vehicle = vehicleService.findById(vehicleLong);
+            vehicleService.delete(vehicle);
+            response.sendRedirect(request.getContextPath() + "/cars");
+        } catch (ServiceException e) {
+            e.printStackTrace();
+            response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Erreur lors de la suppression du vehicule (Servlet).");
+        }
     }
 }
