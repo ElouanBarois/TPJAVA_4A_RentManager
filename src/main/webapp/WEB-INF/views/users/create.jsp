@@ -33,7 +33,7 @@
 
                                     <div class="col-sm-10">
                                         <input type="text" class="form-control" id="last_name" name="last_name"
-                                               placeholder="Nom" oninput="validateForm()">
+                                               placeholder="Nom" oninput="validateForm()" required>
                                         <div id="ErrorMessageNom" class="text-danger" style="display: none;">
                                         </div>
                                     </div>
@@ -43,7 +43,7 @@
 
                                     <div class="col-sm-10">
                                         <input type="text" class="form-control" id="first_name" name="first_name"
-                                               placeholder="Prenom" oninput="validateForm()">
+                                               placeholder="Prenom" oninput="validateForm()" required>
                                         <div id="ErrorMessagePrenom" class="text-danger" style="display: none;">
                                         </div>
                                     </div>
@@ -53,7 +53,7 @@
 
                                     <div class="col-sm-10">
                                         <input type="email" class="form-control" id="email" name="email"
-                                               placeholder="Email" oninput="validateForm()">
+                                               placeholder="Email" oninput="validateForm()" required>
                                         <div id="emailErrorMessage" class="text-danger" style="display: none;">
                                         </div>
                                     </div>
@@ -65,7 +65,7 @@
                                         <input type="text" class="form-control" id="Naissance" name="Naissance"
                                                placeholder="dd/mm/yyyy" required
                                                data-inputmask="'alias': 'dd/mm/yyyy'" data-mask
-                                               oninput="validateForm()">
+                                               oninput="validateForm()" >
                                     </div>
                                 </div>
                                 <div id="ageErrorMessage" class="col-sm-offset-2 col-sm-10 text-danger"
@@ -95,7 +95,6 @@
 <%@ include file="/WEB-INF/views/common/js_imports.jsp" %>
 <script>
     function validateForm() {
-        console.log("coucou")
         var formValableAge;
         var formValableMail;
         var formValableNom;
@@ -105,7 +104,7 @@
         var prenomImput = document.getElementById("first_name").value;
         var errorMessageNom = document.getElementById("ErrorMessageNom");
         var errorMessagePrenom = document.getElementById("ErrorMessagePrenom");
-        if(nomImput.length<3 && nomImput.length>0){
+        if(nomImput.length<3){
             errorMessageNom.innerHTML = "Le nom doit contenir au moins 3 caracteres";
             errorMessageNom.style.display = "block";
             errorMessageNom.style.color = "red";
@@ -114,7 +113,7 @@
         errorMessageNom.style.display = "none";
         formValableNom = true;
         }
-        if(prenomImput.length<3 && prenomImput.length>0){
+        if(prenomImput.length<3){
             errorMessagePrenom.innerHTML = "Le prenom doit contenir au moins 3 caracteres";
             errorMessagePrenom.style.display = "block";
             errorMessagePrenom.style.color = "red";

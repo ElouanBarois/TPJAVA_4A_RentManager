@@ -52,7 +52,7 @@
                                     <label for="seats" class="col-sm-2 control-label">Nombre de places</label>
 
                                     <div class="col-sm-10">
-                                        <input type="text" class="form-control" id="seats" name="seats" placeholder="Nombre de places" required>
+                                        <input type="text" class="form-control" id="seats" name="seats" placeholder="Nombre de places" required oninput="validateForm()">
                                     </div>
                                 </div>
                                 <div id="seatsErrorMessage" class="col-sm-offset-2 col-sm-10 text-danger" style="display: none;"></div>
@@ -72,7 +72,7 @@
                             </div>
                             <!-- /.box-body -->
                             <div class="box-footer">
-                                <button type="submit" class="btn btn-info pull-right">Ajouter</button>
+                                <button id="addButton" type="submit" class="btn btn-info pull-right">Ajouter</button>
                             </div>
                             <!-- /.box-footer -->
                         </form>
@@ -92,21 +92,23 @@
 <%@ include file="/WEB-INF/views/common/js_imports.jsp" %>
 <script>
     function validateForm() {
+        var formValable = false;
         var seatsInput = document.getElementById("seats").value;
         var seats = parseInt(seatsInput);
-
+        var errorMessage = document.getElementById("seatsErrorMessage");
         if (seats < 2 || seats > 9) {
-            var errorMessage = document.getElementById("seatsErrorMessage");
-            if (errorMessage) {
                 errorMessage.innerHTML = "Le nombre de places doit etre compris entre 2 et 9.";
                 errorMessage.style.display = "block";
                 errorMessage.style.color = "red";
+                formValable = false;
             } else {
-                console.error("Error: Element with ID 'seatsErrorMessage' not found.");
+                errorMessage.style.display = "none";
+                formValable = true;
             }
-            return false; // Prevent form submission
-        }
-        return true; // Allow form submission
+
+        var addButton = document.getElementById("addButton");
+        addButton.disabled = !formValable;
+        return formValable;
     }
 </script>
 </body>

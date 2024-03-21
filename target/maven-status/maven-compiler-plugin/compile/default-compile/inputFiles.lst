@@ -27,6 +27,7 @@ C:\Users\eloua\OneDrive\Documents\EPF\EPF_4A\JAVA\RentManager\rentmanager\src\ma
 C:\Users\eloua\OneDrive\Documents\EPF\EPF_4A\JAVA\RentManager\rentmanager\src\main\java\com\epf\rentmanager\service\VehicleService.java
 C:\Users\eloua\OneDrive\Documents\EPF\EPF_4A\JAVA\RentManager\rentmanager\src\main\java\com\epf\rentmanager\ui\cli\VehicleCLI.java
 C:\Users\eloua\OneDrive\Documents\EPF\EPF_4A\JAVA\RentManager\rentmanager\src\main\java\com\epf\rentmanager\configuration\WebConfiguration.java
+C:\Users\eloua\OneDrive\Documents\EPF\EPF_4A\JAVA\RentManager\rentmanager\src\main\java\com\epf\rentmanager\servlet\VehicleDetailsServlet.java
 C:\Users\eloua\OneDrive\Documents\EPF\EPF_4A\JAVA\RentManager\rentmanager\src\main\java\com\epf\rentmanager\servlet\VehicleListServlet.java
 C:\Users\eloua\OneDrive\Documents\EPF\EPF_4A\JAVA\RentManager\rentmanager\src\main\java\com\epf\rentmanager\service\ClientService.java
 C:\Users\eloua\OneDrive\Documents\EPF\EPF_4A\JAVA\RentManager\rentmanager\src\main\java\com\epf\rentmanager\servlet\ClientCreateServlet.java

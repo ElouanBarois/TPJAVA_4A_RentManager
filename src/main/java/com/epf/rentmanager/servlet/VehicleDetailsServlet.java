@@ -21,67 +21,60 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-
-@WebServlet("/users/details")
-public class ClientDetailsServlet extends HttpServlet {
+@WebServlet("/cars/details")
+public class VehicleDetailsServlet extends HttpServlet{
     @Autowired
     ClientService clientService;
     @Autowired
     VehicleService vehicleService;
     @Autowired
     ReservationService reservationService;
-
     @Override
     public void init() throws ServletException {
         super.init();
         SpringBeanAutowiringSupport.processInjectionBasedOnCurrentContext(this);
-
     }
-
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
-
-        String clientID = request.getParameter("id");
-        long clientLong = Long.parseLong(clientID);
+        String vehicleID = request.getParameter("id");
+        long vehicleLong = Long.parseLong(vehicleID);
         Client client = null;
         Vehicle vehicle = null;
         List<ReservationDTO> reservationDTOList = new ArrayList<>();
         List<Reservation> reservationList = new ArrayList<>();
-        List<Vehicle> vehicleList = new ArrayList<>();
-        Set<Long> uniqueVehicleIds = new HashSet<>();
-        int numberOfUniqueVehicleIds = 0;
+        List<Client> clientList = new ArrayList<>();
+        Set<Long> uniqueClientIds = new HashSet<>();
+        int numberOfUniqueClientIds = 0;
         try {
-            client = clientService.findById(clientLong);
-            reservationList = reservationService.findReservationsByClientId(clientLong);
+            vehicle = vehicleService.findById(vehicleLong);
+            reservationList = reservationService.findReservationsByVehicleId(vehicleLong);
             for (Reservation reservation : reservationList) {
-                Vehicle vehicleR = vehicleService.findById(reservation.getVehicleId());
-                Long vehicleId = reservation.getVehicleId();
-                uniqueVehicleIds.add(vehicleId);
+                Client clientR = clientService.findById(reservation.getClientId());
+                Long clientId = reservation.getClientId();
+                uniqueClientIds.add(clientId);
                 ReservationDTO reservationDTO = new ReservationDTO();
                 reservationDTO.setId(reservation.getId());
                 reservationDTO.setDebut(reservation.getDebut());
                 reservationDTO.setFin(reservation.getFin());
-                reservationDTO.setVehicleManufacturer(vehicleR.getConstructeur());
-                reservationDTO.setVehicleModele(vehicleR.getModele());
+                reservationDTO.setClientNom(clientR.getNom());
+                reservationDTO.setClientPrenom(clientR.getPrenom());
                 reservationDTOList.add(reservationDTO);
             }
-            for (Long uniqueVehicleId : uniqueVehicleIds) {
-                vehicle = vehicleService.findById(uniqueVehicleId);
-                vehicleList.add(vehicle);
+            for (Long uniqueClientID : uniqueClientIds) {
+                client = clientService.findById(uniqueClientID);
+                clientList.add(client);
             }
-            numberOfUniqueVehicleIds = uniqueVehicleIds.size();
+            numberOfUniqueClientIds = uniqueClientIds.size();
         } catch (ServiceException e) {
             e.printStackTrace();
         }
-        request.setAttribute("nbVehicle", numberOfUniqueVehicleIds);
-        request.setAttribute("vehicles", vehicleList);
-        request.setAttribute("client", client);
+        request.setAttribute("nbClient", numberOfUniqueClientIds);
+        request.setAttribute("clients", clientList);
+        request.setAttribute("vehicle", vehicle);
 
         request.setAttribute("reservationsR", reservationDTOList);
         request.setAttribute("reservations", reservationList);
-        this.getServletContext().getRequestDispatcher("/WEB-INF/views/users/details.jsp").forward(request, response);
+        this.getServletContext().getRequestDispatcher("/WEB-INF/views/vehicles/details.jsp").forward(request, response);
 
     }
-
 
 }

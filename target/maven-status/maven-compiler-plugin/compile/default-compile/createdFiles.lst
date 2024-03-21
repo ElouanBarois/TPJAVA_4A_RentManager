@@ -1,3 +1,4 @@
+com\epf\rentmanager\servlet\VehicleDetailsServlet.class
 com\epf\rentmanager\servlet\ServletException.class
 com\epf\rentmanager\servlet\ClientCreateServlet.class
 com\epf\rentmanager\servlet\ReservationCreateServlet.class
