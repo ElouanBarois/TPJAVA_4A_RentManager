@@ -70,4 +70,11 @@ public class ClientService {
 			throw new ServiceException("Error while updating client with ID "+ e.getMessage());
 		}
 	}
+	public boolean emailExists(String email) throws ServiceException{
+		try {
+			return clientDao.emailExists(email);
+		} catch (DaoException e) {
+			throw new ServiceException("Error while checking emails (Service) "+ e.getMessage());
+		}
+	}
 }

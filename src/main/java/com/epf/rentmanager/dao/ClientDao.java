@@ -26,6 +26,7 @@ public class ClientDao {
 	private static final String UPDATE_CLIENT_QUERY = "UPDATE Client SET nom=?, prenom=?, email=?, naissance=? WHERE id=?;";
 	private static final String COUNT_CLIENT_QUERY = "SELECT COUNT(*) AS total FROM Client;";
 	private static final String FIND_CLIENTS_QUERY = "SELECT id, nom, prenom, email, naissance FROM Client;";
+	private static final String CHECK_EMAIL_QUERY= "SELECT COUNT(*) FROM Client WHERE email = ?";
 
 	public long create(Client client) throws DaoException {
 		try (Connection connection = ConnectionManager.getConnection(); PreparedStatement statement = connection.prepareStatement(CREATE_CLIENT_QUERY, PreparedStatement.RETURN_GENERATED_KEYS)) {
@@ -138,6 +139,21 @@ public class ClientDao {
 		} catch (SQLException e) {
 			throw new DaoException("Error counting clients"+ e);
 		}
+	}
+	public boolean emailExists(String email) throws DaoException {
+		try (Connection connection = ConnectionManager.getConnection();
+			 PreparedStatement statement = connection.prepareStatement(CHECK_EMAIL_QUERY)) {
+			statement.setString(1, email);
+			try (ResultSet resultSet = statement.executeQuery()) {
+				if (resultSet.next()) {
+					int count = resultSet.getInt(1);
+					return count > 0;
+				}
+			}
+		} catch (SQLException e) {
+			throw new DaoException("Error checking if email exists: " + e.getMessage());
+		}
+		return false;
 	}
 
 }

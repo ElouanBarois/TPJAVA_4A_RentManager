@@ -3,6 +3,7 @@
 <html>
 <%@include file="/WEB-INF/views/common/head.jsp"%>
 <body class="hold-transition skin-blue sidebar-mini">
+<c:set var="emails" value="${requestScope.emails}" />
 <div class="wrapper">
 
     <%@ include file="/WEB-INF/views/common/header.jsp" %>
@@ -46,6 +47,9 @@
 
                                     <div class="col-sm-10">
                                         <input type="email" class="form-control" id="email" name="email" placeholder="Email">
+                                        <div id="emailErrorMessage" class="text-danger" style="display: none;">
+
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -57,7 +61,7 @@
                                     </div>
                                 </div>
                                 <div id="ageErrorMessage" class="col-sm-offset-2 col-sm-10 text-danger" style="display: none;">
-                                    Must be 18 to have an account
+
                                 </div>
                             </div>
                             <!-- /.box-body -->
@@ -82,8 +86,10 @@
 <%@ include file="/WEB-INF/views/common/js_imports.jsp" %>
 <script>
     function validateForm() {
+        console.log("coucou")
     var birthdateInput = document.getElementById("Naissance").value;
     var birthdate = new Date(birthdateInput);
+    var formValable = true;
 
     var today = new Date();
     var age = today.getFullYear() - birthdate.getFullYear();
@@ -97,10 +103,22 @@
         errorMessage.innerHTML = "Vous devez avoir au moins 18 ans pour creer un compte.";
         errorMessage.style.display = "block";
         errorMessage.style.color = "red";
-        return false;
+        formValable =false;
     }
-    return true;
+        var emailInput = document.getElementById("email").value;
+        var emailsList = ${emails};
+
+        if (emailsList.indexOf(emailInput) !== -1) {
+            var emailErrorMessage = document.getElementById("emailErrorMessage");
+            emailErrorMessage.innerHTML = "Email deja utilise.";
+            emailErrorMessage.style.display = "block";
+            emailErrorMessage.style.color = "red";
+            formValable = false;
+        }
+    return formValable;
     }
+
+
 </script>
 </body>
 </html>

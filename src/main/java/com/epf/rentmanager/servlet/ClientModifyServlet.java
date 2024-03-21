@@ -40,7 +40,6 @@ public class ClientModifyServlet extends HttpServlet {
         }
 
         request.setAttribute("client", client);
-
         this.getServletContext().getRequestDispatcher("/WEB-INF/views/users/modify.jsp").forward(request, response);
 
     }
