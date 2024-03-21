@@ -1,9 +1,9 @@
-<%@ taglib uri = "http://java.sun.com/jsp/jstl/core" prefix = "c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html>
-<%@include file="/WEB-INF/views/common/head.jsp"%>
+<%@include file="/WEB-INF/views/common/head.jsp" %>
 <body class="hold-transition skin-blue sidebar-mini">
-<c:set var="emails" value="${requestScope.emails}" />
+<c:set var="emails" value="${requestScope.emails}"/>
 <div class="wrapper">
 
     <%@ include file="/WEB-INF/views/common/header.jsp" %>
@@ -26,29 +26,35 @@
                     <!-- Horizontal Form -->
                     <div class="box">
                         <!-- form start -->
-                        <form class="form-horizontal" method="post" onsubmit="return validateForm()">
+                        <form class="form-horizontal" method="post">
                             <div class="box-body">
                                 <div class="form-group">
                                     <label for="last_name" class="col-sm-2 control-label">Nom</label>
 
                                     <div class="col-sm-10">
-                                        <input type="text" class="form-control" id="last_name" name="last_name" placeholder="Nom">
+                                        <input type="text" class="form-control" id="last_name" name="last_name"
+                                               placeholder="Nom" oninput="validateForm()">
+                                        <div id="ErrorMessageNom" class="text-danger" style="display: none;">
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label for="first_name" class="col-sm-2 control-label">Prenom</label>
 
                                     <div class="col-sm-10">
-                                        <input type="text" class="form-control" id="first_name" name="first_name" placeholder="Prenom">
+                                        <input type="text" class="form-control" id="first_name" name="first_name"
+                                               placeholder="Prenom" oninput="validateForm()">
+                                        <div id="ErrorMessagePrenom" class="text-danger" style="display: none;">
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label for="email" class="col-sm-2 control-label">Email</label>
 
                                     <div class="col-sm-10">
-                                        <input type="email" class="form-control" id="email" name="email" placeholder="Email">
+                                        <input type="email" class="form-control" id="email" name="email"
+                                               placeholder="Email" oninput="validateForm()">
                                         <div id="emailErrorMessage" class="text-danger" style="display: none;">
-
                                         </div>
                                     </div>
                                 </div>
@@ -56,17 +62,20 @@
                                     <label for="Naissance" class="col-sm-2 control-label">Date de Naissance</label>
 
                                     <div class="col-sm-10">
-                                        <input type="text" class="form-control" id="Naissance" name="Naissance" placeholder="dd/mm/yyyy" required
-                                               data-inputmask="'alias': 'dd/mm/yyyy'" data-mask>
+                                        <input type="text" class="form-control" id="Naissance" name="Naissance"
+                                               placeholder="dd/mm/yyyy" required
+                                               data-inputmask="'alias': 'dd/mm/yyyy'" data-mask
+                                               oninput="validateForm()">
                                     </div>
                                 </div>
-                                <div id="ageErrorMessage" class="col-sm-offset-2 col-sm-10 text-danger" style="display: none;">
+                                <div id="ageErrorMessage" class="col-sm-offset-2 col-sm-10 text-danger"
+                                     style="display: none;">
 
                                 </div>
                             </div>
                             <!-- /.box-body -->
                             <div class="box-footer">
-                                <button type="submit" class="btn btn-info pull-right">Ajouter</button>
+                                <button id="addButton" type="submit" class="btn btn-info pull-right" disabled>Ajouter</button>
                             </div>
                             <!-- /.box-footer -->
                         </form>
@@ -87,35 +96,71 @@
 <script>
     function validateForm() {
         console.log("coucou")
-    var birthdateInput = document.getElementById("Naissance").value;
-    var birthdate = new Date(birthdateInput);
-    var formValable = true;
-
-    var today = new Date();
-    var age = today.getFullYear() - birthdate.getFullYear();
-    var monthDiff = today.getMonth() - birthdate.getMonth();
-    if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthdate.getDate())) {
-        age--;
-    }
-
-    if (age < 18) {
+        var formValableAge;
+        var formValableMail;
+        var formValableNom;
+        var formValablePrenom;
+        var formValable = false;
+        var nomImput = document.getElementById("last_name").value;
+        var prenomImput = document.getElementById("first_name").value;
+        var errorMessageNom = document.getElementById("ErrorMessageNom");
+        var errorMessagePrenom = document.getElementById("ErrorMessagePrenom");
+        if(nomImput.length<3 && nomImput.length>0){
+            errorMessageNom.innerHTML = "Le nom doit contenir au moins 3 caracteres";
+            errorMessageNom.style.display = "block";
+            errorMessageNom.style.color = "red";
+            formValableNom = false;
+        } else {
+        errorMessageNom.style.display = "none";
+        formValableNom = true;
+        }
+        if(prenomImput.length<3 && prenomImput.length>0){
+            errorMessagePrenom.innerHTML = "Le prenom doit contenir au moins 3 caracteres";
+            errorMessagePrenom.style.display = "block";
+            errorMessagePrenom.style.color = "red";
+            formValablePrenom = false;
+        }else {
+            errorMessagePrenom.style.display = "none";
+            formValablePrenom = true;
+        }
+        var birthdateInput = document.getElementById("Naissance").value;
+        var birthdate = new Date(birthdateInput);
+        var today = new Date();
+        var age = today.getFullYear() - birthdate.getFullYear();
+        var monthDiff = today.getMonth() - birthdate.getMonth();
+        if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthdate.getDate())) {
+            age--;
+        }
         var errorMessage = document.getElementById("ageErrorMessage");
-        errorMessage.innerHTML = "Vous devez avoir au moins 18 ans pour creer un compte.";
-        errorMessage.style.display = "block";
-        errorMessage.style.color = "red";
-        formValable =false;
-    }
+        if (age < 18) {
+            errorMessage.innerHTML = "Vous devez avoir au moins 18 ans pour creer un compte.";
+            errorMessage.style.display = "block";
+            errorMessage.style.color = "red";
+            formValableAge = false;
+        } else {
+            errorMessage.style.display = "none";
+            formValableAge = true;
+        }
         var emailInput = document.getElementById("email").value;
         var emailsList = ${emails};
+        var emailErrorMessage = document.getElementById("emailErrorMessage");
 
         if (emailsList.indexOf(emailInput) !== -1) {
-            var emailErrorMessage = document.getElementById("emailErrorMessage");
             emailErrorMessage.innerHTML = "Email deja utilise.";
             emailErrorMessage.style.display = "block";
             emailErrorMessage.style.color = "red";
-            formValable = false;
+            formValableMail = false;
+        } else {
+            emailErrorMessage.style.display = "none";
+            formValableMail = true;
         }
-    return formValable;
+
+        if (formValableAge && formValableMail && formValableNom && formValablePrenom) {
+            formValable = true;
+        }
+        var addButton = document.getElementById("addButton");
+        addButton.disabled = !formValable;
+        return formValable;
     }
 
 
