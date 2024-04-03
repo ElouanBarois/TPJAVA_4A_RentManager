@@ -47,6 +47,13 @@ public class ReservationService {
             throw new ServiceException("Error finding reservations by vehicle ID: " + ex.getMessage());
         }
     }
+    public Reservation findReservationById (long id) throws ServiceException {
+        try {
+            return reservationDao.findResaById(id);
+        } catch (DaoException ex) {
+            throw new ServiceException("Error finding reservations by vehicle ID: " + ex.getMessage());
+        }
+    }
 
     public List<Reservation> getAllReservations() throws ServiceException {
         try {
@@ -60,6 +67,13 @@ public class ReservationService {
             return reservationDao.count();
         } catch (DaoException ex) {
             throw new ServiceException("Erreur lors du calcul du nombre de reservations." + ex.getMessage());
+        }
+    }
+    public void update(Reservation reservation) throws ServiceException {
+        try {
+            reservationDao.update(reservation);
+        } catch (DaoException e) {
+            throw new ServiceException("Error while updating reservation with ID "+ e.getMessage());
         }
     }
 

@@ -61,5 +61,16 @@ public class ReservationListServlet extends HttpServlet{
         request.setAttribute("reservations", reservationDTOList);
         this.getServletContext().getRequestDispatcher("/WEB-INF/views/rents/list.jsp").forward(request, response);
     }
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String reservationID = request.getParameter("id");
+        long reservationLong = Long.parseLong(reservationID);
+        try {
+            reservationService.deleteReservation(reservationLong);
+            response.sendRedirect(request.getContextPath() + "/rents");
+        } catch (ServiceException e) {
+            e.printStackTrace();
+            response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Erreur lors de la suppression de la reservation (Servlet).");
+        }
+    }
 
 }

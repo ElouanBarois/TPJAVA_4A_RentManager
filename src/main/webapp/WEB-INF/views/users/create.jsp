@@ -113,7 +113,7 @@
         errorMessageNom.style.display = "none";
         formValableNom = true;
         }
-        if(prenomImput.length<3){
+        if(prenomImput.length<3 && prenomImput.length>0){
             errorMessagePrenom.innerHTML = "Le prenom doit contenir au moins 3 caracteres";
             errorMessagePrenom.style.display = "block";
             errorMessagePrenom.style.color = "red";

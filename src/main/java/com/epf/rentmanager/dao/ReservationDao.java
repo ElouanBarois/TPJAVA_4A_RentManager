@@ -8,6 +8,8 @@ import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+
+import com.epf.rentmanager.model.Client;
 import com.epf.rentmanager.model.Reservation;
 
 import com.epf.rentmanager.persistence.ConnectionManager;
@@ -21,6 +23,8 @@ public class ReservationDao {
 	private static final String DELETE_RESERVATION_QUERY = "DELETE FROM Reservation WHERE id=?;";
 	private static final String FIND_RESERVATIONS_BY_CLIENT_QUERY = "SELECT id, vehicle_id, debut, fin FROM Reservation WHERE client_id=?;";
 	private static final String FIND_RESERVATIONS_BY_VEHICLE_QUERY = "SELECT id, client_id, debut, fin FROM Reservation WHERE vehicle_id=?;";
+	private static final String FIND_RESERVATIONS_BY_ID_QUERY = "SELECT client_id, vehicle_id, debut, fin FROM Reservation WHERE id=?;";
+	private static final String UPDATE_RESERVATIONS_QUERY = "UPDATE Reservation SET client_id=?, vehicle_id=?, debut=?, fin=? WHERE id=?;";
 	private static final String FIND_RESERVATIONS_QUERY = "SELECT id, client_id, vehicle_id, debut, fin FROM Reservation;";
 	private static final String COUNT_RESERVATIONS_QUERY = "SELECT COUNT(*) AS total FROM Reservation;";
 
@@ -105,13 +109,28 @@ public class ReservationDao {
 				LocalDate finDate = resultSet.getDate("fin").toLocalDate();
 				reservations.add(new Reservation(id, clientId, vehicleId, debutDate, finDate));
 			}
-			statement.close();
-			connection.close();
-
 		} catch (SQLException ex) {
 			throw new DaoException("Error finding reservations by clientId: " + ex.getMessage());
 		}
 		return reservations;
+	}
+	public Reservation findResaById(long id) throws DaoException {
+		try (Connection connection = ConnectionManager.getConnection(); PreparedStatement statement = connection.prepareStatement(FIND_RESERVATIONS_BY_ID_QUERY)) {
+			statement.setLong(1, id);
+			ResultSet resultSet = statement.executeQuery();
+			if (resultSet.next()) {
+				long vehicleId = resultSet.getLong("vehicle_id");
+				long clientId = resultSet.getLong("client_id");
+				LocalDate debutDate = resultSet.getDate("debut").toLocalDate();
+				LocalDate finDate = resultSet.getDate("fin").toLocalDate();
+				return new Reservation(id, clientId, vehicleId, debutDate, finDate);
+			} else {
+				throw new DaoException("Reservation with id " + id + " not found.");
+
+			}
+		} catch (SQLException ex) {
+			throw new DaoException("Error finding reservations by Id (DAO): " + ex.getMessage());
+		}
 	}
 
 	public List<Reservation> findAll() throws DaoException {
@@ -131,6 +150,23 @@ public class ReservationDao {
 		}
 		return reservations;
 	}
+	public void update (Reservation reservation) throws DaoException{
+		try (Connection connection = ConnectionManager.getConnection();PreparedStatement statement = connection.prepareStatement(UPDATE_RESERVATIONS_QUERY)) {
+			statement.setLong(1, reservation.getClientId());
+			statement.setLong(2, reservation.getVehicleId());
+			statement.setDate(3, java.sql.Date.valueOf(reservation.getDebut()));
+			statement.setDate(4, java.sql.Date.valueOf(reservation.getFin()));
+			statement.setLong(5, reservation.getId());
+			int affectedRows = statement.executeUpdate();
+			if (affectedRows == 0) {
+				throw new DaoException("Updating reservation failed, no rows affected.");
+			}
+
+		} catch (SQLException ex) {
+			throw new DaoException("Error updating reservation: " + ex.getMessage());
+		}
+	}
+
 	public int count() throws DaoException {
 
 		try (Connection connection = ConnectionManager.getConnection();

@@ -12,4 +12,5 @@ com\epf\rentmanager\servlet\ClientDetailsServlet.class
 com\epf\rentmanager\servlet\ReservationListServlet.class
 com\epf\rentmanager\servlet\VehicleListServlet.class
 com\epf\rentmanager\servlet\VehicleModifyServlet.class
+com\epf\rentmanager\servlet\ReservationModifyServlet.class
 com\epf\rentmanager\model\ReservationDTO.class

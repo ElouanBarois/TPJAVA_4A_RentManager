@@ -23,7 +23,6 @@ public class VehicleListServlet extends HttpServlet {
     public void init() throws ServletException {
         super.init();
         SpringBeanAutowiringSupport.processInjectionBasedOnCurrentContext(this);
-
     }
 
 

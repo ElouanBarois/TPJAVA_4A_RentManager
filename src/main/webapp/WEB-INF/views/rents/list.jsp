@@ -41,16 +41,19 @@
                                     <td>${reservation.clientNom} ${reservation.clientPrenom}</td>
                                     <td>${reservation.debut}</td>
                                     <td>${reservation.fin}</td>
-                                    <td>
-                                        <a class="btn btn-primary disabled" href="${pageContext.request.contextPath}/cars?id=1">
+                                    <td style="display: flex; align-items: center;">
+                                        <a class="btn btn-primary" href="${pageContext.request.contextPath}/rents/details?id=${reservation.id}" style="margin-right: 5px;">
                                             <i class="fa fa-play"></i>
                                         </a>
-                                        <a class="btn btn-success disabled" href="#">
+                                        <a class="btn btn-success" href="${pageContext.request.contextPath}/rents/modify?id=${reservation.id}" style="margin-right: 5px;">
                                             <i class="fa fa-edit"></i>
                                         </a>
-                                        <a class="btn btn-danger disabled" href="#">
-                                            <i class="fa fa-trash"></i>
-                                        </a>
+                                        <form method="post" action="${pageContext.request.contextPath}/rents">
+                                            <input type="hidden" name="id" value="${reservation.id}">
+                                            <button type="submit" class="btn btn-danger" style="margin-right: 5px;">
+                                                <i class="fa fa-trash"></i>
+                                            </button>
+                                        </form>
                                     </td>
                                 </tr>
                                 </c:forEach>
