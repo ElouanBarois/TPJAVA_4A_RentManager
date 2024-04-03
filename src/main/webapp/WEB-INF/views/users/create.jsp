@@ -70,7 +70,6 @@
                                 </div>
                                 <div id="ageErrorMessage" class="col-sm-offset-2 col-sm-10 text-danger"
                                      style="display: none;">
-
                                 </div>
                             </div>
                             <!-- /.box-body -->
@@ -110,8 +109,8 @@
             errorMessageNom.style.color = "red";
             formValableNom = false;
         } else {
-        errorMessageNom.style.display = "none";
-        formValableNom = true;
+            errorMessageNom.style.display = "none";
+            formValableNom = true;
         }
         if(prenomImput.length<3 && prenomImput.length>0){
             errorMessagePrenom.innerHTML = "Le prenom doit contenir au moins 3 caracteres";
@@ -122,11 +121,11 @@
             errorMessagePrenom.style.display = "none";
             formValablePrenom = true;
         }
-        var birthdateInput = document.getElementById("Naissance").value;
-        var birthdate = new Date(birthdateInput);
-        var today = new Date();
-        var age = today.getFullYear() - birthdate.getFullYear();
-        var monthDiff = today.getMonth() - birthdate.getMonth();
+        const birthdateInput = document.getElementById("Naissance").value;
+        const birthdate = new Date(birthdateInput);
+        const today = new Date();
+        let age = today.getFullYear() - birthdate.getFullYear();
+        const monthDiff = today.getMonth() - birthdate.getMonth();
         if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthdate.getDate())) {
             age--;
         }
@@ -140,9 +139,9 @@
             errorMessage.style.display = "none";
             formValableAge = true;
         }
-        var emailInput = document.getElementById("email").value;
+        const emailInput = document.getElementById("email").value;
         var emailsList = ${emails};
-        var emailErrorMessage = document.getElementById("emailErrorMessage");
+        const emailErrorMessage = document.getElementById("emailErrorMessage");
 
         if (emailsList.indexOf(emailInput) !== -1) {
             emailErrorMessage.innerHTML = "Email deja utilise.";
@@ -157,7 +156,7 @@
         if (formValableAge && formValableMail && formValableNom && formValablePrenom) {
             formValable = true;
         }
-        var addButton = document.getElementById("addButton");
+        const addButton = document.getElementById("addButton");
         addButton.disabled = !formValable;
         return formValable;
     }
