@@ -65,7 +65,7 @@
                                         <input type="text" class="form-control" id="Naissance" name="Naissance"
                                                placeholder="dd/mm/yyyy" required
                                                data-inputmask="'alias': 'dd/mm/yyyy'" data-mask
-                                               oninput="validateForm()" >
+                                               oninput="validateForm()">
                                     </div>
                                 </div>
                                 <div id="ageErrorMessage" class="col-sm-offset-2 col-sm-10 text-danger"
@@ -74,7 +74,8 @@
                             </div>
                             <!-- /.box-body -->
                             <div class="box-footer">
-                                <button id="addButton" type="submit" class="btn btn-info pull-right" disabled>Ajouter</button>
+                                <button id="addButton" type="submit" class="btn btn-info pull-right" disabled>Ajouter
+                                </button>
                             </div>
                             <!-- /.box-footer -->
                         </form>
@@ -103,8 +104,8 @@
         var prenomImput = document.getElementById("first_name").value;
         var errorMessageNom = document.getElementById("ErrorMessageNom");
         var errorMessagePrenom = document.getElementById("ErrorMessagePrenom");
-        if(nomImput.length<3){
-            errorMessageNom.innerHTML = "Le nom doit contenir au moins 3 caracteres";
+        if (nomImput.length < 3) {
+            errorMessageNom.innerHTML = "Le nom doit contenir au moins 3 caract\xE8res";
             errorMessageNom.style.display = "block";
             errorMessageNom.style.color = "red";
             formValableNom = false;
@@ -112,12 +113,12 @@
             errorMessageNom.style.display = "none";
             formValableNom = true;
         }
-        if(prenomImput.length<3 && prenomImput.length>0){
-            errorMessagePrenom.innerHTML = "Le prenom doit contenir au moins 3 caracteres";
+        if (prenomImput.length < 3 && prenomImput.length > 0) {
+            errorMessagePrenom.innerHTML = "Le pr\xE9nom doit contenir au moins 3 caract\xE8res";
             errorMessagePrenom.style.display = "block";
             errorMessagePrenom.style.color = "red";
             formValablePrenom = false;
-        }else {
+        } else {
             errorMessagePrenom.style.display = "none";
             formValablePrenom = true;
         }
@@ -131,7 +132,7 @@
         }
         var errorMessage = document.getElementById("ageErrorMessage");
         if (age < 18) {
-            errorMessage.innerHTML = "Vous devez avoir au moins 18 ans pour creer un compte.";
+            errorMessage.innerHTML = "Vous devez avoir au moins 18 ans pour cr\xE9er un compte.";
             errorMessage.style.display = "block";
             errorMessage.style.color = "red";
             formValableAge = false;
@@ -144,7 +145,7 @@
         const emailErrorMessage = document.getElementById("emailErrorMessage");
 
         if (emailsList.indexOf(emailInput) !== -1) {
-            emailErrorMessage.innerHTML = "Email deja utilise.";
+            emailErrorMessage.innerHTML = "Email d\xE9j\xE0 utilis\xE9.";
             emailErrorMessage.style.display = "block";
             emailErrorMessage.style.color = "red";
             formValableMail = false;

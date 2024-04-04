@@ -36,7 +36,7 @@ public class ReservationDao {
 			// Convert LocalDate to java.sql.Date
 			Date debutDate = Date.valueOf(reservation.getDebut());
 			statement.setDate(3, debutDate);
-			Date finDate = Date.valueOf(reservation.getDebut());
+			Date finDate = Date.valueOf(reservation.getFin());
 			statement.setDate(4, finDate);
 			int affectedRows = statement.executeUpdate();
 

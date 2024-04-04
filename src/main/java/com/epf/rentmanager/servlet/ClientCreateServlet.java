@@ -59,6 +59,10 @@ public class ClientCreateServlet extends HttpServlet{
 
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         LocalDate naissance = LocalDate.parse(Stringnaissance, formatter);
+
+
+
+
         try {
             Client client = new Client(0, Nom, Prenom, email, naissance);
             clientService.create(client);

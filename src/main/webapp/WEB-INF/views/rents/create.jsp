@@ -3,7 +3,7 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title> </title>
+    <title></title>
 </head>
 <%@include file="/WEB-INF/views/common/head.jsp" %>
 <body class="hold-transition skin-blue sidebar-mini">
@@ -20,6 +20,10 @@
                 Reservations
             </h1>
         </section>
+        <% String errorMessage = (String) request.getAttribute("errorMessageDatesChoisies"); %>
+        <% if (errorMessage != null && !errorMessage.isEmpty()) { %>
+        <div style="color: red; margin-left: 20px;"><%= errorMessage %></div>
+        <% } %>
 
         <!-- Main content -->
         <section class="content">
@@ -56,7 +60,7 @@
 
                                     <div class="col-sm-10">
                                         <input type="text" class="form-control" id="begin" name="begin" required
-                                               data-inputmask="'alias': 'dd/mm/yyyy'" data-mask >
+                                               data-inputmask="'alias': 'dd/mm/yyyy'" data-mask>
                                     </div>
                                 </div>
 
@@ -77,7 +81,8 @@
                             </div>
                             <!-- /.box-body -->
                             <div class="box-footer">
-                                <button id ="addButton" type="submit" class="btn btn-info pull-right" disabled>Ajouter</button>
+                                <button id="addButton" type="submit" class="btn btn-info pull-right" disabled>Ajouter
+                                </button>
                             </div>
                             <!-- /.box-footer -->
                         </form>
@@ -105,9 +110,9 @@
 </script>
 <script>
     function transformDateFormat(endDateInput) {
-        const transformedDate = endDateInput.replace(/^(\d{2})\/(\d{2})\/(\d{4})$/, '$2/$1/$3');
-        return transformedDate;
+        return endDateInput.replace(/^(\d{2})\/(\d{2})\/(\d{4})$/, '$2/$1/$3');
     }
+
     function validateForm() {
         const beginDateInput = document.getElementById("begin").value;
         const endDateInput = document.getElementById("end").value;
@@ -117,7 +122,6 @@
         const transformedEndDate = transformDateFormat(endDateString)
         const beginDate = new Date(transformedBeginDate);
         const endDate = new Date(transformedEndDate);
-        console.log(beginDate, endDate);
         const errorMessageDate = document.getElementById("DatesErrorMessage");
         const errorMessageDate2 = document.getElementById("DatesErrorMessage2");
 
@@ -125,27 +129,27 @@
         let formValable2 = false;
         let formValable = false;
         if (beginDate > endDate) {
-            errorMessageDate.innerHTML= "La date de fin doit etre ulterieure a celle de debut."
-            errorMessageDate.style.display="block";
-            errorMessageDate.style.color="red"
-            formValable1= false;
-        }else {
-            errorMessageDate.style.display="none";
+            errorMessageDate.innerHTML = "La date de fin doit \xEAtre ult\xE9rieure \xE0 celle du d\xE9but."
+            errorMessageDate.style.display = "block";
+            errorMessageDate.style.color = "red"
+            formValable1 = false;
+        } else {
+            errorMessageDate.style.display = "none";
             formValable1 = true;
         }
         const timeDifference = endDate.getTime() - beginDate.getTime();
         const daysDifference = timeDifference / (1000 * 3600 * 24);
         if (daysDifference > 7) {
-            errorMessageDate2.innerHTML= "La reservation ne peut pas durer plus de 7 jours."
-            errorMessageDate2.style.display="block";
-            errorMessageDate2.style.color="red"
-            formValable2= false;
-        }else {
-            errorMessageDate2.style.display="none";
+            errorMessageDate2.innerHTML = "La r\xE9servation ne peut pas durer plus de 7 jours."
+            errorMessageDate2.style.display = "block";
+            errorMessageDate2.style.color = "red"
+            formValable2 = false;
+        } else {
+            errorMessageDate2.style.display = "none";
             formValable2 = true;
         }
-        if (formValable1 && formValable2){
-            formValable=true
+        if (formValable1 && formValable2) {
+            formValable = true
         }
         const addButton = document.getElementById("addButton");
         addButton.disabled = !formValable;

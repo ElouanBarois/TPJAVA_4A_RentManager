@@ -7,13 +7,17 @@ import java.util.List;
 import java.util.Optional;
 
 import com.epf.rentmanager.model.Client;
+import com.epf.rentmanager.model.Reservation;
 import com.epf.rentmanager.model.Vehicle;
+import com.epf.rentmanager.dao.ReservationDao;
+
 
 import com.epf.rentmanager.persistence.ConnectionManager;
 import org.springframework.stereotype.Repository;
 
 @Repository
 public class VehicleDao {
+
 	private VehicleDao() {}
 	
 	private static final String CREATE_VEHICLE_QUERY = "INSERT INTO Vehicle( constructeur,modele, nb_places) VALUES(?, ?, ?);";
@@ -111,6 +115,7 @@ public class VehicleDao {
 			throw new DaoException("Error updating vehicle (DAO): " + ex.getMessage());
 		}
 	}
+
 	public int count() throws DaoException {
 
 		try (Connection connection = ConnectionManager.getConnection();
