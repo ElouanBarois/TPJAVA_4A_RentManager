@@ -22,10 +22,7 @@ public class ClientService {
 		if (client.getNom().isEmpty() || client.getPrenom().isEmpty()) {
 			throw new ServiceException("Le nom et le prénom du client ne peuvent pas être vides.");
 		}
-
-		// Convertir le nom de famille en majuscules
 		client.setNom(client.getNom().toUpperCase());
-
 		try {
 			return clientDao.create(client);
 		} catch (DaoException ex) {

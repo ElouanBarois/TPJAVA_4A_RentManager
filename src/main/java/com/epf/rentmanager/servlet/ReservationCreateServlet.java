@@ -108,7 +108,7 @@ public class ReservationCreateServlet extends HttpServlet{
                 response.sendRedirect(request.getContextPath() + "/rents");
             }else {
                 String message= "Les dates selectionnées pour ce véhicule sont déjà réservées.";
-                String message2= "Il faut au moins 1 jour de pause entre la nouvelle réservation et la précédente.";
+                String message2= "Il faut au moins 1 jour de pause entre la nouvelle réservation et la précédente. (30 jours d'affilé)";
                 if (!disponible){
                     request.setAttribute("errorMessageDatesChoisies", message);
                 }else{
