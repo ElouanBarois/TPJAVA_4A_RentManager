@@ -1,7 +1,10 @@
 package com.epf.rentmanager.service;
 
+import java.time.LocalDate;
+import java.time.Period;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Pattern;
 
 import com.epf.rentmanager.dao.DaoException;
 import com.epf.rentmanager.model.Client;
@@ -19,9 +22,7 @@ public class ClientService {
 
 
 	public long create(Client client) throws ServiceException {
-		if (client.getNom().isEmpty() || client.getPrenom().isEmpty()) {
-			throw new ServiceException("Le nom et le prénom du client ne peuvent pas être vides.");
-		}
+		client = validateClient(client);
 		client.setNom(client.getNom().toUpperCase());
 		try {
 			return clientDao.create(client);
@@ -56,7 +57,7 @@ public class ClientService {
 		try {
 			clientDao.delete(client);
 		} catch (DaoException e) {
-			throw new ServiceException("Error while deleting client with ID "+ e.getMessage());
+			throw new ServiceException("Erreur lors de la suppression du client "+ e.getMessage());
 		}
 	}
 
@@ -73,5 +74,36 @@ public class ClientService {
 		} catch (DaoException e) {
 			throw new ServiceException("Error while checking emails (Service) "+ e.getMessage());
 		}
+	}
+	public Client validateClient(Client client) throws ServiceException {
+		if (client == null) {
+			throw new ServiceException("Client object is null");
+		}
+		if (client.getNom() == null || client.getNom().isEmpty() || client.getNom().length()<3 ){
+			throw new ServiceException("Le nom du client est vide ou inférieur à 3 caractères.");
+		}
+		if (client.getPrenom() == null || client.getPrenom().isEmpty() || client.getPrenom().length()<3) {
+			throw new ServiceException("Le prénom du client est vide ou inférieur à 3 caractères.");
+		}
+		LocalDate dateNaissance = client.getNaissance();
+		LocalDate currentDate = LocalDate.now();
+		int age = Period.between(dateNaissance, currentDate).getYears();
+		if (age < 18) {
+			throw new ServiceException("Le client doit être âgé de 18 ans ou plus.");
+		}
+		if (!isValidEmail(client.getEmail())) {
+			throw new ServiceException("Format d'email invalide.");
+		}
+		if (emailExists(client.getEmail())) {
+			throw new ServiceException("L'email existe déjà.");
+		}
+		System.out.println("coucou");
+		return client;
+	}
+
+	private boolean isValidEmail(String email) {
+		String emailRegex = "^[a-zA-Z0-9_+&*-]+(?:\\.[a-zA-Z0-9_+&*-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,7}$";
+		Pattern pattern = Pattern.compile(emailRegex);
+		return pattern.matcher(email).matches();
 	}
 }

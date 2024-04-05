@@ -56,13 +56,8 @@ public class ClientCreateServlet extends HttpServlet{
         String Prenom = request.getParameter("first_name");
         String email = request.getParameter("email");
         String Stringnaissance = request.getParameter("Naissance");
-
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         LocalDate naissance = LocalDate.parse(Stringnaissance, formatter);
-
-
-
-
         try {
             Client client = new Client(0, Nom, Prenom, email, naissance);
             clientService.create(client);
