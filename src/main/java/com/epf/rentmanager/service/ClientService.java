@@ -19,16 +19,16 @@ public class ClientService {
 		this.clientDao = clientDao;
 	}
 
-
-
 	public long create(Client client) throws ServiceException {
 		client = validateClient(client);
 		client.setNom(client.getNom().toUpperCase());
+		client = validateEmailnotused(client);
 		try {
 			return clientDao.create(client);
 		} catch (DaoException ex) {
 			throw new ServiceException("Erreur lors de la création du client."+ ex.getMessage());
 		}
+
 	}
 
 	public Client findById(long id) throws ServiceException {
@@ -62,17 +62,19 @@ public class ClientService {
 	}
 
 	public void update(Client client) throws ServiceException {
+		client = validateClient(client);
+		client.setNom(client.getNom().toUpperCase());
 		try {
 			clientDao.update(client);
 		} catch (DaoException e) {
-			throw new ServiceException("Error while updating client with ID "+ e.getMessage());
+			throw new ServiceException("Erreur lors de la mise à jour du client "+ e.getMessage());
 		}
 	}
 	public boolean emailExists(String email) throws ServiceException{
 		try {
 			return clientDao.emailExists(email);
 		} catch (DaoException e) {
-			throw new ServiceException("Error while checking emails (Service) "+ e.getMessage());
+			throw new ServiceException("L'email existe déjà."+ e.getMessage());
 		}
 	}
 	public Client validateClient(Client client) throws ServiceException {
@@ -94,16 +96,18 @@ public class ClientService {
 		if (!isValidEmail(client.getEmail())) {
 			throw new ServiceException("Format d'email invalide.");
 		}
-		if (emailExists(client.getEmail())) {
-			throw new ServiceException("L'email existe déjà.");
-		}
-		System.out.println("coucou");
 		return client;
 	}
-
 	private boolean isValidEmail(String email) {
 		String emailRegex = "^[a-zA-Z0-9_+&*-]+(?:\\.[a-zA-Z0-9_+&*-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,7}$";
 		Pattern pattern = Pattern.compile(emailRegex);
 		return pattern.matcher(email).matches();
+	}
+	public Client validateEmailnotused(Client client) throws ServiceException{
+		//On sépare de la validation car cette fois il ne faut pas vérifier dans la méthode update
+		if (emailExists(client.getEmail())){
+			throw new ServiceException("L'email existe déjà.");
+		}
+		return client;
 	}
 }

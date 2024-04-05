@@ -16,10 +16,11 @@ public class VehicleService {
 	}
 
 	public long create(Vehicle vehicle) throws ServiceException {
+		//Contraintes du véhicule
 		if (vehicle.getConstructeur().isEmpty()) {
 			throw new ServiceException("Le constructeur du véhicule ne peut pas être vide.");
 		}
-		if (vehicle.getNbPlaces() <= 1) {
+		if (vehicle.getNbPlaces() <= 1 || vehicle.getNbPlaces() >9) {
 			throw new ServiceException("Le nombre de places du véhicule doit être supérieur à 1.");
 		}
 		try {
