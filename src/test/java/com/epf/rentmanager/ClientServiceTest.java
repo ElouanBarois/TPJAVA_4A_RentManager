@@ -29,10 +29,6 @@ public class ClientServiceTest {
         MockitoAnnotations.initMocks(this);
     }
 
-    @Test
-    public void shouldAnswerWithTrue() {
-        assertTrue(true);
-    }
 
     @Test
     void findAll_should_fail_when_dao_throws_exception() throws DaoException {

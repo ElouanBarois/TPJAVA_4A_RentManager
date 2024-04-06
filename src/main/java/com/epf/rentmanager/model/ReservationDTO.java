@@ -8,8 +8,9 @@ public class ReservationDTO {
     private String vehicleModele;
     private LocalDate debut;
     private LocalDate fin;
+    private Long vehicleId;
 
-    public ReservationDTO(long id, String clientNom, String clientPrenom, String vehicleManufacturer, String vehicleModele, LocalDate debut, LocalDate fin) {
+    public ReservationDTO(long id, String clientNom, String clientPrenom, String vehicleManufacturer, String vehicleModele, LocalDate debut, LocalDate fin, Long vehicleId) {
         this.id = id;
         this.clientNom = clientNom;
         this.clientPrenom = clientPrenom;
@@ -17,6 +18,7 @@ public class ReservationDTO {
         this.vehicleModele = vehicleModele;
         this.debut = debut;
         this.fin = fin;
+        this.vehicleId = vehicleId;
     }
     public ReservationDTO() {
         // Empty constructor
@@ -78,6 +80,9 @@ public class ReservationDTO {
         this.fin = fin;
     }
 
+    public Long getVehicleId(){return vehicleId;}
+    public void setVehicleId(Long vehicleId){this.vehicleId = vehicleId;}
+
     @Override
     public String toString() {
         return "ReservationDTO{" +
@@ -88,6 +93,7 @@ public class ReservationDTO {
                 ", vehicleModele='" + vehicleModele + '\'' +
                 ", debut=" + debut +
                 ", fin=" + fin +
+                ", vehicleId=" + vehicleId +
                 '}';
     }
 }

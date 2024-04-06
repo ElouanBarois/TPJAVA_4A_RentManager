@@ -53,6 +53,7 @@ public class ReservationListServlet extends HttpServlet{
                 reservationDTO.setClientPrenom(client.getPrenom());
                 reservationDTO.setVehicleManufacturer(vehicle.getConstructeur());
                 reservationDTO.setVehicleModele(vehicle.getModele());
+                reservationDTO.setVehicleId(vehicle.getId());
                 reservationDTOList.add(reservationDTO);
             }
         } catch (ServiceException e) {

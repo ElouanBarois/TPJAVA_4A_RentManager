@@ -19,6 +19,10 @@ public class Vehicle {
         this.nbPlaces = nbPlaces;
     }
 
+    public Vehicle() {
+
+    }
+
     // Getters and Setters
     public long getId() {
         return id;

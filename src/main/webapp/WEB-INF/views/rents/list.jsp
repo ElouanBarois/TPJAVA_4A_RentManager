@@ -42,7 +42,7 @@
                                     <td>${reservation.debut}</td>
                                     <td>${reservation.fin}</td>
                                     <td style="display: flex; align-items: center;">
-                                        <a class="btn btn-primary" href="${pageContext.request.contextPath}/rents/details?id=${reservation.id}" style="margin-right: 5px;">
+                                        <a class="btn btn-primary" href="${pageContext.request.contextPath}/cars/details?id=${reservation.vehicleId}" style="margin-right: 5px;">
                                             <i class="fa fa-play"></i>
                                         </a>
                                         <a class="btn btn-success" href="${pageContext.request.contextPath}/rents/modify?id=${reservation.id}" style="margin-right: 5px;">

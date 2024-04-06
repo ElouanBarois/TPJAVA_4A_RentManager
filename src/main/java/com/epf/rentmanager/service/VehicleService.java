@@ -1,6 +1,7 @@
 package com.epf.rentmanager.service;
 
 import java.util.List;
+import java.util.Objects;
 
 import com.epf.rentmanager.dao.DaoException;
 import com.epf.rentmanager.dao.VehicleDao;
@@ -16,18 +17,25 @@ public class VehicleService {
 	}
 
 	public long create(Vehicle vehicle) throws ServiceException {
-		//Contraintes du véhicule
-		if (vehicle.getConstructeur().isEmpty()) {
-			throw new ServiceException("Le constructeur du véhicule ne peut pas être vide.");
-		}
-		if (vehicle.getNbPlaces() <= 1 || vehicle.getNbPlaces() >9) {
-			throw new ServiceException("Le nombre de places du véhicule doit être supérieur à 1.");
-		}
+		vehicle = validateVehicle(vehicle);
 		try {
 			return vehicleDao.create(vehicle);
 		} catch (DaoException ex) {
 			throw new ServiceException("Erreur lors de la création du véhicule."+ ex.getMessage());
 		}
+	}
+	public Vehicle validateVehicle(Vehicle vehicle) throws ServiceException {
+		if (Objects.isNull(vehicle.getConstructeur()) || vehicle.getConstructeur().isEmpty()) {
+			throw new ServiceException("Le constructeur du véhicule ne peut pas être vide.");
+		}
+		if (Objects.isNull(vehicle.getModele()) || vehicle.getModele().isEmpty()) {
+			throw new ServiceException("Le modèle du véhicule ne peut pas être vide.");
+		}
+		int nbPlaces = vehicle.getNbPlaces();
+		if (nbPlaces <= 1 || nbPlaces > 9) {
+			throw new ServiceException("Le nombre de places du véhicule doit être compris entre 2 et 9.");
+		}
+		return vehicle;
 	}
 
 	public Vehicle findById(long id) throws ServiceException {
@@ -60,6 +68,7 @@ public class VehicleService {
 		}
 	}
 	public void update(Vehicle vehicle) throws ServiceException{
+		vehicle = validateVehicle(vehicle);
 		try {
 			vehicleDao.update(vehicle);
 		} catch (DaoException e) {
