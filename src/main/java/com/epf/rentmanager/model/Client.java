@@ -7,7 +7,7 @@ public class Client {
     private String email;
     private java.time.LocalDate naissance;
 
-    // Constructor
+
     public Client(long id, String nom, String prenom, String email, LocalDate naissance) {
         this.id = id;
         this.nom = nom;
@@ -16,7 +16,6 @@ public class Client {
         this.naissance = naissance;
     }
 
-    // Getters and Setters
     public long getId() {
         return id;
     }

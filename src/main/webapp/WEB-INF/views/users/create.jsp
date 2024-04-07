@@ -33,7 +33,7 @@
 
                                     <div class="col-sm-10">
                                         <input type="text" class="form-control" id="last_name" name="last_name"
-                                               placeholder="Nom" oninput="validateForm()" required>
+                                               placeholder="Nom" onblur="validateForm()" required>
                                         <div id="ErrorMessageNom" class="text-danger" style="display: none;">
                                         </div>
                                     </div>
@@ -43,7 +43,7 @@
 
                                     <div class="col-sm-10">
                                         <input type="text" class="form-control" id="first_name" name="first_name"
-                                               placeholder="Prenom" oninput="validateForm()" required>
+                                               placeholder="Prenom" onblur="validateForm()" required>
                                         <div id="ErrorMessagePrenom" class="text-danger" style="display: none;">
                                         </div>
                                     </div>
@@ -53,7 +53,7 @@
 
                                     <div class="col-sm-10">
                                         <input type="email" class="form-control" id="email" name="email"
-                                               placeholder="Email" oninput="validateForm()" required>
+                                               placeholder="Email" onblur="validateForm()" required>
                                         <div id="emailErrorMessage" class="text-danger" style="display: none;">
                                         </div>
                                     </div>
@@ -62,13 +62,15 @@
                                     <label for="Naissance" class="col-sm-2 control-label">Date de Naissance</label>
 
                                     <div class="col-sm-10">
-                                        <input type="text" class="form-control" id="Naissance" name="Naissance"
-                                               placeholder="dd/mm/yyyy" required
+                                        <input type="text" class="form-control" id="Naissance" name="Naissance" required
                                                data-inputmask="'alias': 'dd/mm/yyyy'" data-mask
-                                               oninput="validateForm()">
+                                               onblur="validateForm()">
                                     </div>
                                 </div>
                                 <div id="ageErrorMessage" class="col-sm-offset-2 col-sm-10 text-danger"
+                                     style="display: none;">
+                                </div>
+                                <div id="DatesErrorMessage3" class="col-sm-offset-2 col-sm-10 text-danger"
                                      style="display: none;">
                                 </div>
                             </div>
@@ -93,7 +95,22 @@
 <!-- ./wrapper -->
 
 <%@ include file="/WEB-INF/views/common/js_imports.jsp" %>
+<script src="${pageContext.request.contextPath}/resources/plugins/input-mask/jquery.inputmask.js"></script>
+<script src="${pageContext.request.contextPath}/resources/plugins/input-mask/jquery.inputmask.date.extensions.js"></script>
+<script src="${pageContext.request.contextPath}/resources/plugins/input-mask/jquery.inputmask.extensions.js"></script>
 <script>
+    $(function () {
+        $('[data-mask]').inputmask()
+    });
+</script>
+<script>
+    function transformDateFormat(DateInput) {
+        return DateInput.replace(/^(\d{2})\/(\d{2})\/(\d{4})$/, '$2/$1/$3');
+    }
+    function isValidDateFormat(dateString) {
+        const regex = /^(0[1-9]|[1-2][0-9]|3[0-1])\/(0[1-9]|1[0-2])\/\d{4}$/;
+        return regex.test(dateString);
+    }
     function validateForm() {
         var formValableAge;
         var formValableMail;
@@ -104,7 +121,7 @@
         var prenomImput = document.getElementById("first_name").value;
         var errorMessageNom = document.getElementById("ErrorMessageNom");
         var errorMessagePrenom = document.getElementById("ErrorMessagePrenom");
-        if (nomImput.length < 3) {
+        if (nomImput.length < 3 ) {
             errorMessageNom.innerHTML = "Le nom doit contenir au moins 3 caract\xE8res";
             errorMessageNom.style.display = "block";
             errorMessageNom.style.color = "red";
@@ -123,7 +140,9 @@
             formValablePrenom = true;
         }
         const birthdateInput = document.getElementById("Naissance").value;
-        const birthdate = new Date(birthdateInput);
+        const birthdateString = birthdateInput.toString();
+        const transformedDate = transformDateFormat(birthdateString);
+        const birthdate = new Date(transformedDate);
         const today = new Date();
         let age = today.getFullYear() - birthdate.getFullYear();
         const monthDiff = today.getMonth() - birthdate.getMonth();
@@ -140,6 +159,19 @@
             errorMessage.style.display = "none";
             formValableAge = true;
         }
+        let formValable3;
+        const errorMessageDate3 = document.getElementById("DatesErrorMessage3");
+        if (birthdateInput.trim() !== "") {
+            if (!isValidDateFormat(birthdateInput)) {
+                errorMessageDate3.innerHTML = "Veuillez entrer une date au format dd/mm/yyyy.";
+                errorMessageDate3.style.display = "block";
+                errorMessageDate3.style.color = "red";
+                formValable3 = false;
+            } else {
+                errorMessageDate3.style.display = "none";
+                formValable3 = true;
+            }
+        }
         const emailInput = document.getElementById("email").value;
         var emailsList = ${emails};
         const emailErrorMessage = document.getElementById("emailErrorMessage");
@@ -154,7 +186,7 @@
             formValableMail = true;
         }
 
-        if (formValableAge && formValableMail && formValableNom && formValablePrenom) {
+        if (formValableAge && formValableMail && formValableNom && formValablePrenom && formValable3) {
             formValable = true;
         }
         const addButton = document.getElementById("addButton");

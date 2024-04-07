@@ -33,7 +33,6 @@ public class ClientDao {
 			statement.setString(1, client.getNom());
 			statement.setString(2, client.getPrenom());
 			statement.setString(3, client.getEmail());
-			// Convert LocalDate to java.sql.Date
 			Date naissanceDate = Date.valueOf(client.getNaissance());
 			statement.setDate(4, naissanceDate);
 			int affectedRows = statement.executeUpdate();

@@ -24,10 +24,8 @@ public class ClientCLI {}
         Scanner scanner = new Scanner(System.in);
         System.out.println("Création d'un client");
 
-        // Consume the newline character
         scanner.nextLine();
 
-        // Prompt for user input
         System.out.print("Nom : ");
         String nom = scanner.nextLine();
         System.out.print("Prénom : ");
@@ -37,14 +35,12 @@ public class ClientCLI {}
         System.out.print("Date de naissance (AAAA-MM-JJ) : ");
         String naissanceStr = scanner.nextLine();
 
-        // Validate email format using regex pattern
         Pattern emailPattern = Pattern.compile("^(.+)@(.+)$");
         if (!emailPattern.matcher(email).matches()) {
             System.out.println("Erreur : Format d'email invalide.");
             return;
         }
 
-        // Validate date format and parse it to LocalDate
         LocalDate naissance;
         try {
             naissance = LocalDate.parse(naissanceStr);
@@ -53,14 +49,12 @@ public class ClientCLI {}
             return;
         }
 
-        // Check for empty fields
         if (nom.isEmpty() || prenom.isEmpty() || email.isEmpty() || naissanceStr.isEmpty()) {
             System.out.println("Erreur : Veuillez saisir tous les champs.");
             return;
         }
 
         try {
-            // Create client object and call service to create it
             Client client = new Client(0, nom, prenom, email, naissance);
             clientService.create(client);
             System.out.println("Client créé avec succès !");

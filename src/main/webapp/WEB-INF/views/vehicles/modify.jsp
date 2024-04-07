@@ -40,39 +40,30 @@
                                     <!-- vous devez passer par les methodes getParameter de l'objet request, est sp�cifiant la valeur -->
                                     <!-- de l'attribut "name" de l'input -->
                                     <div class="col-sm-10">
-                                        <input type="text" class="form-control" id="manufacturer" name="manufacturer" placeholder="${vehicle.constructeur}" required>
+                                        <input type="text" class="form-control" id="manufacturer" name="manufacturer" value="${vehicle.constructeur}" required>
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label for="modele" class="col-sm-2 control-label">Modele</label>
 
                                     <div class="col-sm-10">
-                                        <input type="text" class="form-control" id="modele" name="modele" placeholder="${vehicle.modele}" required>
+                                        <input type="text" class="form-control" id="modele" name="modele" value="${vehicle.modele}" required>
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label for="seats" class="col-sm-2 control-label">Nombre de places</label>
 
                                     <div class="col-sm-10">
-                                        <input type="text" class="form-control" id="seats" name="seats" placeholder="${vehicle.nbPlaces}" required>
+                                        <input type="text" class="form-control" id="seats" name="seats" value="${vehicle.nbPlaces}" required onblur="validateForm()">
                                     </div>
                                 </div>
-                                <!--
-                                <div class="form-group">
-                                    <label for="owner" class="col-sm-2 control-label">Propriétaire</label>
+                                <div id="seatsErrorMessage" class="col-sm-offset-2 col-sm-10 text-danger" style="display: none;"></div>
 
-                                    <div class="col-sm-10">
-                                        <select class="form-control" id="owner" name="owner">
-                                            <option value="1">John Doe</option>
-                                            <option value="2">Jane Doe</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                -->
+
                             </div>
                             <!-- /.box-body -->
                             <div class="box-footer">
-                                <button type="submit" class="btn btn-info pull-right">Ajouter</button>
+                                <button id="addButton" type="submit" class="btn btn-info pull-right">Ajouter</button>
                             </div>
                             <!-- /.box-footer -->
                         </form>
@@ -90,6 +81,35 @@
 <!-- ./wrapper -->
 
 <%@ include file="/WEB-INF/views/common/js_imports.jsp" %>
+<script>
+    function validateForm() {
+        var formValable = false;
+        var seatsInput = document.getElementById("seats").value;
+        var seats = parseInt(seatsInput);
+        var errorMessage = document.getElementById("seatsErrorMessage");
+        if (seatsInput !== "") {
+            if (seats < 2 || seats > 9) {
+                errorMessage.innerHTML = "Le nombre de places doit etre compris entre 2 et 9.";
+                errorMessage.style.display = "block";
+                errorMessage.style.color = "red";
+                formValable = false;
+            } else {
+                errorMessage.style.display = "none";
+                formValable = true;
+            }
+        }else{
+            errorMessage.innerHTML = "Le nombre de places doit etre compris entre 2 et 9.";
+            errorMessage.style.display = "block";
+            errorMessage.style.color = "red";
+            formValable = false;
+        }
+
+
+        var addButton = document.getElementById("addButton");
+        addButton.disabled = !formValable;
+        return formValable;
+    }
+</script>
 </body>
 </html>
 

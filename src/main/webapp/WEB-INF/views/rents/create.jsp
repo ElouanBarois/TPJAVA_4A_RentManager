@@ -60,7 +60,7 @@
 
                                     <div class="col-sm-10">
                                         <input type="text" class="form-control" id="begin" name="begin" required
-                                               data-inputmask="'alias': 'dd/mm/yyyy'" data-mask>
+                                               data-inputmask="'alias': 'dd/mm/yyyy'" data-mask onblur="validateForm()">
                                     </div>
                                 </div>
 
@@ -78,10 +78,13 @@
                                 <div id="DatesErrorMessage2" class="col-sm-offset-2 col-sm-10 text-danger"
                                      style="display: none;">
                                 </div>
+                                <div id="DatesErrorMessage3" class="col-sm-offset-2 col-sm-10 text-danger"
+                                     style="display: none;">
+                                </div>
                             </div>
                             <!-- /.box-body -->
                             <div class="box-footer">
-                                <button id="addButton" type="submit" class="btn btn-info pull-right" disabled>Ajouter
+                                <button id="addButton" type="submit" class="btn btn-info pull-right" disabled >Ajouter
                                 </button>
                             </div>
                             <!-- /.box-footer -->
@@ -109,8 +112,12 @@
     });
 </script>
 <script>
-    function transformDateFormat(endDateInput) {
-        return endDateInput.replace(/^(\d{2})\/(\d{2})\/(\d{4})$/, '$2/$1/$3');
+    function transformDateFormat(DateInput) {
+        return DateInput.replace(/^(\d{2})\/(\d{2})\/(\d{4})$/, '$2/$1/$3');
+    }
+    function isValidDateFormat(dateString) {
+        const regex = /^(0[1-9]|[1-2][0-9]|3[0-1])\/(0[1-9]|1[0-2])\/\d{4}$/;
+        return regex.test(dateString);
     }
 
     function validateForm() {
@@ -120,13 +127,26 @@
         const endDateString = endDateInput.toString();
         const transformedBeginDate = transformDateFormat(beginDateString);
         const transformedEndDate = transformDateFormat(endDateString)
+        let formValable3;
+        const errorMessageDate3 = document.getElementById("DatesErrorMessage3");
+        if ((beginDateInput.trim() && endDateInput.trim()) !==""){
+            if (!isValidDateFormat(beginDateInput) || !isValidDateFormat(endDateInput)) {
+                errorMessageDate3.innerHTML = "Veuillez entrer une date au format dd/mm/yyyy.";
+                errorMessageDate3.style.display = "block";
+                errorMessageDate3.style.color = "red";
+                formValable3 = false;
+            } else {
+                errorMessageDate3.style.display = "none";
+                formValable3 = true;
+            }
+        }
         const beginDate = new Date(transformedBeginDate);
         const endDate = new Date(transformedEndDate);
         const errorMessageDate = document.getElementById("DatesErrorMessage");
         const errorMessageDate2 = document.getElementById("DatesErrorMessage2");
 
-        let formValable1 = false;
-        let formValable2 = false;
+        let formValable1;
+        let formValable2;
         let formValable = false;
         if (beginDate > endDate) {
             errorMessageDate.innerHTML = "La date de fin doit \xEAtre ult\xE9rieure \xE0 celle du d\xE9but."
@@ -148,7 +168,7 @@
             errorMessageDate2.style.display = "none";
             formValable2 = true;
         }
-        if (formValable1 && formValable2) {
+        if (formValable1 && formValable2 && formValable3) {
             formValable = true
         }
         const addButton = document.getElementById("addButton");

@@ -21,7 +21,6 @@ public class ReservationDTO {
         this.vehicleId = vehicleId;
     }
     public ReservationDTO() {
-        // Empty constructor
     }
 
     public long getId() {

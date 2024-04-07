@@ -10,8 +10,7 @@ public class Main {}
 
 
         VehicleCLI vehicleCLI = new VehicleCLI();
-        vehicleCLI.listVehicles(); // Example usage of a method from ClientCLI
-
+        vehicleCLI.listVehicles();
     }
 }
 */
